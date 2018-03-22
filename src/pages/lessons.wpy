@@ -11,12 +11,11 @@ import wepy from "wepy";
 
 export default class Lessons extends wepy.page {
   config = {
-    navigationBarTitleText: "课程",
+    navigationBarTitleText: "2",
     navigationBarTextStyle: "white",
     navigationBarBackgroundColor: "#dd5044",
     enablePullDownRefresh: true,
     usingComponents: {
-      "wxc-loadmore": "../packages/@minui/wxc-loadmore/dist/index"
     }
   };
   components = {};

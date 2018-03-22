@@ -96,19 +96,18 @@ export default class extends wepy.app {
         pagePath: 'pages/lessons',
         iconPath: 'assets/icon/iconfont-lesson.png',
         selectedIconPath: 'assets/icon/iconfont-lesson-active.png',
-        text: '课程'
+        text: '第二页'
       }, {
         pagePath: 'pages/mine',
         iconPath: 'assets/icon/iconfont-mine.png',
         selectedIconPath: 'assets/icon/iconfont-mine-active.png',
-        text: '我的'
+        text: '第三页'
       }]
     }
   }
   // this.$parent.globalData 获取全局变量
   globalData = {
     userInfo: null
-    // myname: 'wuyaoke'
   }
   constructor () {
     super()
