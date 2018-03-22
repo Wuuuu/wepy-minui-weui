@@ -1,0 +1,197 @@
+
+<view class="myOrder-container">
+  <wxc-tab  bind:tabchange="onClick" default-index="{{0}}" component-id="c4" animate="{{true}}" active-text-color="#dd5044" active-line-color="#dd5044">
+    <wxc-tab-panel  wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.content}}" tab-index="{{index}}" component-id="c4" label="{{tab.title}}">
+      <view class="lesson-detail-teacher" hidden="{{activeIndex != 0}}">
+        
+  <view class="unpaidOrder-container">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd header-box">
+        <view class="header-box-order-no">D5400124EE22214AAA</view>
+        <view class="header-box-order-status">未付款</view>
+      </view>
+      <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg unpaidOrder-wrapper" hover-class="weui-cell_active">
+            <view class="order-box">
+              <view class="poster">
+                <image src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"/>
+              </view>
+              <view class="details">
+                <view class="course">琵琶初级课程</view>
+                <view class="box">
+                  <view class="price">￥188</view>
+                  <view class="sections">32节</view>
+                </view>
+                <view class="place">校区：天府校区</view>
+                <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access">
+               合计： ￥4800
+            </view>
+            <view class="weui-cell weui-cell_access">
+               付款时间： 19分20秒
+            </view>
+            <view class="weui-cell weui-cell_access handle-btn-group">
+              <button class="handle-btn pay-btn">付款</button>
+              <button class="handle-btn cancel-btn">取消订单</button>
+            </view>
+        </view>
+    </view>
+    <!-- <view class="order-no">D5400124EE22214AAA</view>
+    <view class="order-wrapper">
+      <view class="order-box">
+        <view class="poster">
+          <image src="../assets/lesson/fine_arts_01.png" mode="widthFix" />
+        </view>
+        <view class="details">
+          <view class="course">琵琶初级课程</view>
+          <view class="box">
+            <view class="price">￥188</view>
+            <view class="sections">32节</view>
+          </view>
+          <view class="place">校区：天府校区</view>
+          <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+        </view>
+      </view>
+    </view> -->
+  </view>
+
+      </view>
+      <view class="lesson-detail-teacher" hidden="{{activeIndex != 1}}">
+        
+  <view class="unpaidOrder-container">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">
+        D5400124EE22214AAA
+      </view>
+      <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg unpaidOrder-wrapper" hover-class="weui-cell_active">
+            <view class="order-box">
+              <view class="poster">
+                <image src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"/>
+              </view>
+              <view class="details">
+                <view class="course">琵琶初级课程</view>
+                <view class="box">
+                  <view class="price">￥188</view>
+                  <view class="sections">32节</view>
+                </view>
+                <view class="place">校区：天府校区</view>
+                <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access">
+               合计： ￥4800
+            </view>
+            <view class="weui-cell weui-cell_access handle-btn-group">
+              <button class="handle-btn cancel-btn">删除订单</button>
+            </view>
+        </view>
+    </view>
+  </view>
+
+      </view>
+      <view class="lesson-detail-teacher" hidden="{{activeIndex != 2}}">
+        
+  <view class="unpaidOrder-container">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">
+        D5400124EE22214AAA
+      </view>
+      <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg unpaidOrder-wrapper" hover-class="weui-cell_active">
+            <view class="order-box">
+              <view class="poster">
+                <image src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"/>
+              </view>
+              <view class="details">
+                <view class="course">琵琶初级课程</view>
+                <view class="box">
+                  <view class="price">￥188</view>
+                  <view class="sections">32节</view>
+                </view>
+                <view class="place">校区：天府校区</view>
+                <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access">
+               合计： ￥4800
+            </view>
+            <view class="weui-cell weui-cell_access handle-btn-group">
+              <button class="handle-btn cancel-btn">删除订单</button>
+            </view>
+        </view>
+    </view>
+  </view>
+
+        
+  <view class="unpaidOrder-container">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd header-box">
+        <view class="header-box-order-no">D5400124EE22214AAA</view>
+        <view class="header-box-order-status">未付款</view>
+      </view>
+      <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_appmsg unpaidOrder-wrapper" hover-class="weui-cell_active">
+            <view class="order-box">
+              <view class="poster">
+                <image src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"/>
+              </view>
+              <view class="details">
+                <view class="course">琵琶初级课程</view>
+                <view class="box">
+                  <view class="price">￥188</view>
+                  <view class="sections">32节</view>
+                </view>
+                <view class="place">校区：天府校区</view>
+                <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access">
+               合计： ￥4800
+            </view>
+            <view class="weui-cell weui-cell_access">
+               付款时间： 19分20秒
+            </view>
+            <view class="weui-cell weui-cell_access handle-btn-group">
+              <button class="handle-btn pay-btn">付款</button>
+              <button class="handle-btn cancel-btn">取消订单</button>
+            </view>
+        </view>
+    </view>
+    <!-- <view class="order-no">D5400124EE22214AAA</view>
+    <view class="order-wrapper">
+      <view class="order-box">
+        <view class="poster">
+          <image src="../assets/lesson/fine_arts_01.png" mode="widthFix" />
+        </view>
+        <view class="details">
+          <view class="course">琵琶初级课程</view>
+          <view class="box">
+            <view class="price">￥188</view>
+            <view class="sections">32节</view>
+          </view>
+          <view class="place">校区：天府校区</view>
+          <view class="brief">简介：都是一堆废话。。。占位。。。占位。。。</view>
+        </view>
+      </view>
+    </view> -->
+  </view>
+
+      </view>
+    </wxc-tab-panel>
+  </wxc-tab>
+</view>

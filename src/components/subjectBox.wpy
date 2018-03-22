@@ -1,0 +1,60 @@
+<style lang="less">
+.subject-box-container {
+  .box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16rpx;
+    .poster {
+      width: 400rpx;
+      image {
+        display: block;
+        // padding-top: 5%;
+        margin: 0 auto;
+        width: 90%;
+      }
+    }
+    .desc {
+      flex: 1;
+      .brief {
+        font-size: 28rpx;
+        color: #888;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <repeat for="{{subjectData}}" item="item">
+    <view class="subject-box-container">
+      <view class="box">
+        <view class="poster">
+          <image src="{{item.poster}}" mode="widthFix"/>
+        </view>
+        <view class="desc">
+          <view class="name">{{item.name}}</view>
+          <view class="brief">{{item.brief}}</view>
+        </view>
+      </view>
+    </view>
+  </repeat>  
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class SubjectBox extends wepy.component {
+  props = {
+    subjectData: {
+      type: Array,
+      default: []
+    }
+  }
+  data = {}
+  methods = {
+  }
+
+  onLoad (e) {
+  }
+}
+</script>

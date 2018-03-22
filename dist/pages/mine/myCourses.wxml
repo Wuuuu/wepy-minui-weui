@@ -1,0 +1,22 @@
+
+<view class="mycourses-container">
+  <view class="course-wrapper">
+    <block wx:for="{{[1,1,1,1]}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+      <view class="course-box">
+        <view class="course-poster">
+          <image src="../../assets/index/index-course.jpg" mode="widthFix"/>
+        </view>
+        <view class="course-msg">
+          <view class="name">琵琶初级课程</view>
+          <view class="brief">简介：琵琶，是弹拨乐器首座， 拨弦类弦鸣乐器。木制，音箱呈半梨形，上装四弦，原先是用丝线，现多用钢丝、钢绳、尼龙制成。</view>
+          <view class="progress">课程班级：琵琶初级1班</view>
+          <view class="progress">课程进度：已上21课时 剩21课时</view>
+          <view class="progress-bar">
+            <wxc-progress percent="80" active-color="#ac89ff,#ff76a2" class="progress-bar-com">50%</wxc-progress>
+            <view class="text">70%</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

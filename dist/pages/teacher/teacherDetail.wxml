@@ -1,0 +1,62 @@
+
+  <view class="teacher-detail-container">
+    <view class="mine-user">
+      <view class="mine-user-box">
+        <image src="{{entity.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}"/>
+        <text>{{entity.name}}</text>
+      </view>
+    </view>
+    <wxc-tab  bind:tabchange="onClick" default-index="{{0}}" component-id="c4" animate="{{true}}" active-text-color="#dd5044" active-line-color="#dd5044">
+      <wxc-tab-panel  wx:for="{{tabs}}" wx:for-item="tab" wx:key="{{tab.content}}" tab-index="{{index}}" component-id="c4" label="{{tab.title}}">
+        <view class="lesson-detail-teacher" hidden="{{activeIndex != 0}}">
+          <view class="weui-panel">
+            <view class="weui-panel__hd">姓名：{{entity.name}}</view>
+            <view class="weui-panel__hd">教学经验： 5年</view>
+            <view class="weui-panel__hd">擅长：0.0</view>
+            <view class="weui-panel__bd">
+              <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__desc">{{entity.brief}}</view>
+              </view>
+            </view>
+          </view>
+        </view>
+        <view class="lesson-detail-teacher" hidden="{{activeIndex != 1}}">
+          
+  <block wx:for="{{$SubjectBox$subjectData}}" wx:for-index="$SubjectBox$index" wx:for-item="$SubjectBox$item" wx:key="$SubjectBox$key">
+    <view class="subject-box-container">
+      <view class="box">
+        <view class="poster">
+          <image src="{{$SubjectBox$item.poster}}" mode="widthFix"/>
+        </view>
+        <view class="desc">
+          <view class="name">{{$SubjectBox$item.name}}</view>
+          <view class="brief">{{$SubjectBox$item.brief}}</view>
+        </view>
+      </view>
+    </view>
+  </block>  
+
+        </view>
+        <view class="lesson-detail-teacher" hidden="{{activeIndex != 2}}">
+          
+  <block class="_f033ce8" wx:for="{{$Comment$comments}}" wx:for-index="$Comment$index" wx:for-item="$Comment$item" wx:key="$Comment$key">
+    <view class="comment _f033ce8">
+      <view class="comment-avatar _f033ce8">
+        <image class="avatar _f033ce8" src="{{$Comment$item.student.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}"/>
+      </view>
+      <view class="comment-content _f033ce8">
+        <view class="userName _f033ce8">{{$Comment$item.student.name}}</view>
+        <view class="content _f033ce8">{{$Comment$item.content}}</view>
+      </view>
+      <view class="comment-time _f033ce8">
+        <view class="time _f033ce8">{{$Comment$item.commentTime}}</view>
+      </view>
+    </view>
+  </block>
+          <view class="button-sp-area comment-action">
+            <button class="weui-btn comment-btn" type="primary" plain="true" bindtap="handleToCourseEvalution">我要评价</button>
+          </view>
+        </view>
+      </wxc-tab-panel>
+    </wxc-tab>
+  </view>

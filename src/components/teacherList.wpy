@@ -1,0 +1,84 @@
+<style lang="less">
+.teachers-wrapper {
+  background: #fff;
+  .teachers-box {
+    display: flex;
+    margin-left: 30rpx;
+    padding: 20rpx 0;
+    border-bottom: 1px solid #efefef;
+    .teachers-box-avatar {
+      flex: 0 0 160rpx;
+      image　{
+        display: block;
+        margin: 0 auto;
+        width: 140rpx;
+        height: 140rpx;
+        border-radius: 50%;
+        border: 1px solid #efefef;
+      }
+    }
+    .teachers-box-msg {
+      flex: 1;
+      padding-left: 12rpx;
+      .name {
+        font-size: 36rpx;
+      }
+      .subject {
+        font-size: 28rpx;
+      }
+      .intro {
+        display: block;
+        width: 500rpx;
+        font-size: 24rpx;
+        color: #666;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+}
+</style>
+
+<template>
+  <view class="teachers-wrapper">
+    <repeat for="{{teacherData}}" item="item">
+      <view class="teachers-box" @tap="toTeacherDetail" data-id="{{item.id}}" >
+        <view class="teachers-box-avatar">
+          <image src="{{ item.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}" />
+        </view>
+        <view class="teachers-box-msg">
+          <view class="name">{{item.name}}</view>
+          <view class="subject">油画、舞蹈 | 教学经验： 7年</view>
+          <view class="intro">从小就开始画画了，以优异的成绩考上路鲁迅学院，至今已经有20多年绘画经验了</view>
+        </view>
+      </view>
+    </repeat>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+
+export default class TeacherList extends wepy.component {
+  props = {
+    teacherData: {
+      type: Array,
+      default: []
+    }
+  }
+  data = {}
+  methods = {
+    toTeacherDetail (e) {
+      let self = this 
+      const { id } = e.currentTarget.dataset
+      wx.navigateTo({
+        url: `/pages/teacher/teacherDetail?id=${id}`
+      })
+    }
+  }
+
+  onLoad (e) {
+    let self = this
+  }
+}
+</script>

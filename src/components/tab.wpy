@@ -1,0 +1,74 @@
+<style lang="less" scoped>
+@import '../styles/weui/widget/weui-tab/weui-navbar.wxss';
+
+page, .page, .page__bd{
+  height: 100%;
+}
+.page__bd{
+  padding-bottom: 0;
+}
+.weui-tab__content{
+  padding-top: 60px;
+  text-align: center;
+}
+</style>
+<template>
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-tab">
+            <view class="weui-navbar">
+                <block wx:for="{{tabs}}" wx:key="*this">
+                    <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick">
+                        <view class="weui-navbar__title">{{item}}</view>
+                    </view>
+                </block>
+                <view class="weui-navbar__slider" style="left: {{sliderLeft}}px; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+            </view>
+            <view class="weui-tab__panel">
+                <view class="weui-tab__content" hidden="{{activeIndex != 0}}">0</view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 1}}">1</view>
+                <view class="weui-tab__content" hidden="{{activeIndex != 2}}">2</view>
+            </view>
+        </view>
+    </view>
+</view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+
+  export default class Tabs extends wepy.component {
+    config = {
+      navigationBarTitleText: 'test'
+    }
+    props = {
+      tabsData: {},
+      test: {}
+    }
+    data = {
+      tabs: ["选项一", "选项二", "选项三"],
+      activeIndex: 1,
+      sliderOffset: 0,
+      sliderLeft: 0
+    }
+    methods = {
+      tabClick (e) {
+        let that = this
+        that.sliderOffset = e.currentTarget.offsetLeft
+        that.activeIndex = e.currentTarget.id
+      }
+    }
+    onLoad () {
+      let that = this
+      var sliderWidth = 96 // 需要设置slider的宽度，用于计算中间位置
+      console.log('test:',that.test)
+        wx.getSystemInfo({
+          success: (res) => {
+            that.sliderLeft = (res.windowWidth / that.data.tabs.length - sliderWidth) / 2
+            that.sliderOffset = res.windowWidth / that.data.tabs.length * that.data.activeIndex
+          }
+      })
+    }
+
+  }
+</script>

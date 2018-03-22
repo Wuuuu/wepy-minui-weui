@@ -1,0 +1,238 @@
+<style lang="less" scoped>
+.login-change-pwd-wrapper {
+  .login-change-pwd-wrapper{
+    padding: 30rpx 28rpx;
+    .login-box {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 36rpx auto;
+      width: 600rpx;
+      height: 80rpx;
+      border: 1px solid #999;
+      border-radius: 46rpx;
+      .account-icon {
+        flex: 0 0 100rpx;
+        image {
+          display: block;
+          margin: 0 auto;
+          width: 48rpx;
+          height: 48rpx;
+        }
+      }
+      .account-input {
+        flex: 1;
+      }
+      .verification-code {
+        flex: 0 0 200rpx;
+        margin-right: 12rpx;
+        height: 60rpx;
+        line-height: 60rpx;
+        text-align: center;
+        font-size: 28rpx;
+        color: #fff;
+        background: #dd5044;
+        border-radius: 36rpx;
+      }
+    }
+    .button-sp-area{
+      margin: 0 auto;
+      padding-top: 30rpx;
+      padding-bottom: 36rpx;
+      width: 60%;
+      .weui-btn {
+        border-radius: 48rpx;
+        color: #fff;
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="login-change-pwd-wrapper">
+    <view class="login-change-pwd-wrapper">
+      <view class="account-box login-box">
+        <view class="account-icon">
+          <image src="../../assets/icon/icon-login-account.png" />
+        </view>
+        <view class="account-input">
+          <input placeholder="请输入您的手机号" auto-focus placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.userName}}" @input="bindChange" data-field="userName"/>
+        </view>
+      </view>
+      <view class="account-box login-box">
+        <view class="account-icon">
+          <image src="../../assets/icon/icon-login-password.png" />
+        </view>
+        <view class="account-input">
+          <input placeholder="请输入验证码" placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.code}}" @input="bindChange" data-field="code"/>
+        </view>
+        <view class="verification-code" @tap.stop="getVerificationCode">
+          获取验证码
+        </view>
+      </view>
+      <view class="account-box login-box">
+        <view class="account-icon">
+          <image src="../../assets/icon/icon-login-changepwd.png" />
+        </view>
+        <view class="account-input">
+          <input placeholder="请输入您的新密码" password="true" auto-focus placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.password}}" @input="bindChange" data-field="password"/>
+        </view>
+      </view>
+      <view class="button-sp-area">
+        <button class="weui-btn" type="primary" plain="true" @tap="handleLogin" style="background: {{btnChangeColor}};border-color: {{btnChangeColor}};">登录</button>
+      </view>
+    </view>
+    <wxc-toast is-show="{{toastShow}}" text="{{errText}}" icon="warning" icon-color="#dd5044"></wxc-toast>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import _ from 'underscore'
+
+  import config from '../../config/config'
+  import * as services_login_login from '../../services/login/login'
+
+  export default class ChangePwd extends wepy.page {
+    config = {
+      navigationBarTitleText: '修改密码',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+        'wxc-toast': '../../packages/@minui/wxc-toast/dist/index',
+        'wxc-countdown': '../../packages/@minui/wxc-countdown/dist/index'
+      }
+    }
+    components = {
+    }
+    data = {
+      errors: {},
+      entity: {
+        userName: null,
+        password: null,
+        code: null,
+        client: '小程序',
+        userType: 'student' // 'student.code'
+      },
+      telephone: null,
+      btnChangeColor: '#999',
+      errText: '请输入正确的手机号码',
+      toastShow: false
+    }
+    methods = {
+      bindChange (e) {
+        let self = this
+        const {entity} = self.data
+        const {field} = e.currentTarget.dataset
+        const {value} = e.detail
+        entity[field] = value
+
+        if (value) {
+          self.btnChangeColor = '#dd5044'
+          self.$apply()
+        } else {
+          self.btnChangeColor = '#999'
+          self.$apply()
+        }
+        if(field == 'userName') {
+          self.telephone = value
+          self.$apply()
+        }
+
+        self.entity = entity
+        self.$apply()
+      },
+      getVerificationCode () {
+        let self = this
+        const {telephone} = self.data 
+        console.log(telephone)
+        if ( telephone != null && telephone.length == 11 ) {
+          services_login_login.verifycode({
+            params: {telephone},
+            success: (res) => {
+              console.log(res)
+            }
+          })
+        } else {
+          self.toastShow = true
+          self.$apply()
+          setTimeout(function(){
+            self.toastShow = false
+            self.$apply()
+          }, 1000)
+        }
+      },
+      handleLogin () {
+        let self = this
+        const {entity, confirmLoading} = self.data
+
+        if (confirmLoading) return
+
+        self.confirmLoading = true
+        // wx.showLoading({
+        //   title: '加载中'
+        // })
+        self.checkEntity(entity, null, (errors) => {
+          if (!_.isEmpty(errors)) {
+            let errs = []
+            for (let index in errors) {
+              errs.push(errors[index])
+            }
+            // wx.showToast({ title: errs[0], duration: 1500 })
+            self.errText = errs[0]
+            // console.log(errs[0])
+            self.toastShow = true
+            self.confirmLoading = false
+
+            setTimeout(function(){
+              self.toastShow = false
+              self.$apply()
+            }, 1000)
+
+            self.$apply()
+            wx.hideLoading()
+            return
+          }
+          services_login_login.resetpassword({
+            data: { ...entity },
+            success: (res) => {
+              const {token, unionuser} = res
+              config.setToken(token)
+              config.setUnionuser(unionuser)
+              wx.showToast({
+              title: '修改成功！',
+              icon: 'success',
+              duration: 1500,
+              success: () => {
+                wx.navigateBack()
+              }
+            })
+              console.log('回调res',res)
+              // wx.navigateBack()
+            },
+            complete: () => {
+              self.confirmLoading = false
+              self.$apply()
+              wx.hideLoading()
+            }
+          })
+        })
+        self.$apply()
+      }
+    }
+    onLoad () {
+    }
+    checkEntity (entity, field, callback) {
+      let errors = {}
+      if (_.isEmpty(entity.userName)) {
+        errors.userName = "手机号不能为空"
+      }
+      if (_.isEmpty(entity.code)) {
+        errors.code = "验证码不能为空"
+      }
+      if (_.isEmpty(entity.password)) {
+        errors.password = "新密码不能为空"
+      }
+      callback(errors)
+    }
+  }
+</script>

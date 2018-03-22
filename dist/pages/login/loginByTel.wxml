@@ -1,0 +1,28 @@
+
+  <view class="login-tel-container _1049032">
+    <view class="login-tel-wrapper _1049032">
+      <view class="userName-box login-box _1049032">
+        <view class="userName-icon _1049032">
+          <image src="../../assets/icon/icon-login-account.png" class="_1049032"/>
+        </view>
+        <view class="userName-input _1049032">
+          <input placeholder="请输入您的手机号" auto-focus placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.userName}}" bindinput="bindChange" data-field="userName" class="_1049032"/>
+        </view>
+      </view>
+      <view class="userName-box login-box _1049032">
+        <view class="userName-icon _1049032">
+          <image src="../../assets/icon/icon-login-password.png" class="_1049032"/>
+        </view>
+        <view class="userName-input _1049032">
+          <input placeholder="请输入验证码" placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.password}}" bindinput="bindChange" data-field="password" class="_1049032"/>
+        </view>
+        <view class="verification-code _1049032" catchtap="getVerificationCode">
+          获取验证码
+        </view>
+      </view>
+      <view class="button-sp-area _1049032">
+        <button class="weui-btn _1049032" type="primary" plain="true" bindtap="handleLogin" style="background: {{btnChangeColor}};border-color: {{btnChangeColor}};">登录</button>
+      </view>
+    </view>
+    <wxc-toast is-show="{{toastShow}}" text="{{errText}}" icon="warning" icon-color="#dd5044" class="_1049032"/>
+  </view>

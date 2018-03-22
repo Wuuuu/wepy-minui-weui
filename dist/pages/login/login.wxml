@@ -1,0 +1,33 @@
+
+  <view class="login-container _659e741">
+    <view class="login-wrapper _659e741">
+      <view class="userName-box login-box _659e741">
+        <view class="userName-icon _659e741">
+          <image src="../../assets/icon/icon-login-account.png" class="_659e741"/>
+        </view>
+        <view class="userName-input _659e741">
+          <input placeholder="请输入您的手机号" auto-focus placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.userName}}" bindinput="bindChange" data-field="userName" class="_659e741"/>
+        </view>
+      </view>
+      <view class="userName-box login-box _659e741">
+        <view class="userName-icon _659e741">
+          <image src="../../assets/icon/icon-login-password.png" class="_659e741"/>
+        </view>
+        <view class="userName-input _659e741">
+          <input placeholder="请输入您的密码" password="true" placeholder-style="font-size: 28rpx;color:#666;" value="{{entity.password}}" bindinput="bindChange" data-field="password" class="_659e741"/>
+        </view>
+      </view>
+      <view class="button-sp-area _659e741">
+        <button class="weui-btn _659e741" type="primary" plain="true" bindtap="handleLogin" style="background: {{btnChangeColor}};border-color: {{btnChangeColor}};">登录</button>
+      </view>
+      <view class="handle-text _659e741">
+        <view class="by-tel _659e741" bindtap="handletoPage" data-wpyhandletopage-a="byTel">
+          使用手机验证码登录
+        </view>
+        <view class="forget-pwd _659e741" bindtap="handletoPage" data-wpyhandletopage-a="changePwd">
+          忘记密码？
+        </view>
+      </view>
+    </view>
+    <wxc-toast is-show="{{toastShow}}" text="{{errText}}" icon="warning" icon-color="#dd5044" class="_659e741"/>
+  </view>

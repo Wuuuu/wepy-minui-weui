@@ -1,0 +1,233 @@
+<style lang="less" scoped>
+.coursr-detail-container {
+  .comment-student {
+    display: flex;
+    padding: 20rpx 30rpx;
+    background: #fff;
+    margin-bottom: 16rpx;
+    .avatar {
+      flex: 0 0 160rpx;
+      image {
+        display: block;
+        margin: 0 auto;
+        width: 160rpx;
+        height: 160rpx;
+        border-radius: 50%;
+      }
+    }
+    .name {
+      flex: 1;
+      padding-left: 24rpx;
+      line-height: 160rpx;
+    }
+  }
+  .comment-course {
+    background: #fff;
+    margin-bottom: 16rpx;
+    .comment-course-box {
+      padding: 20rpx 28rpx;
+    }
+  }
+  .comment-content {
+    background: #fff;
+    .rating {
+      .rating-box {
+        display: flex;
+        padding: 12rpx 24rpx;
+        .desc {
+          flex: 0 0 200rpx;
+          line-height: 74rpx;
+        }
+        .rating-com {
+          flex: 1;
+          margin-top: 10rpx;
+        }
+      }
+    }
+    .content {
+      padding: 20rpx 30rpx;
+      .weui-cells {
+        border: 1px solid #efefef;
+        border-radius: 16rpx;
+        .weui-cell {
+          padding: 20rpx 24rpx;
+        }
+      }
+      .weui-cells::after, .weui-cells::before {
+        border: none;
+      }
+    }
+  }
+  .button-sp-area{
+    margin: 0 auto 40rpx;
+    padding-top: 30rpx;
+    width: 40%;
+    .submit-comment {
+      color: #fff;
+      background: #16A05D;
+    }
+  }
+}
+</style>
+<template>
+  <view class="coursr-detail-container">
+    <view class="comment-student">
+      <view class="avatar">
+        <image src="{{courseDetail =='' ? teacherDetail.photo : courseDetail.teacher.photo}}" />
+      </view>
+      <view class="name">{{courseDetail=='' ? teacherDetail.name : courseDetail.teacher.name}}</view>
+    </view>
+    <block wx:if="{{entity.objType == 'teach_schedule'}}">
+      <view class="comment-course">
+        <view class="comment-course-box">
+          <view class="course">上课课程：{{courseDetail.course.name}}</view>
+          <view class="time">课程时间：{{date}} {{startTime}} - {{endTime}}</view>
+          <view class="place">课程地点：{{courseDetail.school.name}}</view>
+        </view>
+      </view>
+    </block>
+    <view class="comment-content">
+      <view class="rating">
+        <view class="rating-box">
+          <view class="desc">星级评价：</view>
+          <RatingStar class="rating-com" :star="star"/>
+        </view>
+      </view>
+      <view class="content">
+        <view class="weui-cells weui-cells_after-title">
+          <view class="weui-cell">
+            <view class="weui-cell__bd">
+              <textarea class="weui-textarea" 
+                placeholder="请输入评价内容......" 
+                style="height: 5.3em" 
+                maxlength="{{maxlength}}"
+                @input="handleInputLen"
+              />
+              <view class="weui-textarea-counter">{{inputLen}}/{{maxlength}}</view>
+            </view>
+          </view> 
+        </view>
+      </view>
+    </view>
+    <view class="button-sp-area">
+      <button class="weui-btn submit-comment" type="primary" plain="true" @tap="handleSubmitComment">提交评价</button>
+    </view> 
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import RatingStar from '../../components/ratingStar'
+  import moment from '../../utils/moment'
+  import config from '../../config/config'
+  import * as services_schedule_detail from '../../services/schedule/schedule'
+  // import * as services_schedule_comment from '../../services/schedule/schedule'
+
+  export default class CourseEvalutaion extends wepy.page {
+    config = {
+      navigationBarTitleText: '课程评价',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+      }
+    }
+    components = {
+      RatingStar
+    }
+    data = {
+      maxlength: 200,
+      inputLen: 0,
+      entity: {
+        objType: '',
+        objId: '',  // 课程Id
+        Content: '', // 评价内容
+        stars: '',
+      },
+      courseDetail: '',
+      teacherDetail: '',
+      date: null,
+      startTime: null,
+      endTime: null,
+      star: 0
+    }
+    methods = {
+      handleInputLen(e) {
+        let self = this
+        const {entity} = self.data
+        let value = e.detail.value
+        self.inputLen = value.length
+        entity.Content = value
+        self.entity = entity
+        self.$apply()
+      },
+      handleSubmitComment () {
+        let self = this 
+        wepy.showLoading({
+          title: '提交中...'
+        })
+        const {entity, star} = self.data
+        let unionuser = config.getUnionuser()
+        entity.stars = self.star
+        entity.studentId = unionuser.id
+        console.log(entity)
+        if( entity.Content.length > 0){
+          services_schedule_detail.addcomment({
+            data: { ...entity },
+            success: (res) => {
+              console.log(res)
+              wepy.hideLoading()
+            },
+            complete: () => {
+              wepy.showToast({
+                title: '提交成功',
+                icon: 'success',
+                duration: 1500
+              })
+              setTimeout(function(){
+                wepy.navigateBack()
+              },1500)
+            }
+          })
+        } else {
+          wepy.showToast({
+            title: '评论不能为空',
+            duration: 2000
+          })
+        }
+      }
+    }
+    onLoad(params) {
+      let self = this
+      self.entity.objId = params.id
+      self.entity.objType = params.objType
+      console.log('params',params)
+      if (params.objType == 'teach_schedule') {
+        services_schedule_detail.info({
+          params: {
+            id: params.id,
+            _info: 'school.course.comments<student>.teacher.classroom'
+          },
+          success: (res) => {
+            let courseDate = res.startTime
+            let startTime = res.startTime
+            let endTime = res.endTime
+            let date = moment(courseDate).format('YYYY-MM-DD')
+            let coursestartTime = moment(startTime).format('HH:mm')
+            let courseendTime = moment(endTime).format('HH:mm')
+            self.courseDetail = res
+            self.date = date
+            self.startTime = coursestartTime
+            self.endTime = courseendTime
+            self.comments = res.comments
+            self.$apply()
+          }
+        })
+      } 
+      if (params.objType == 'teach_person') {
+        self.teacherDetail = params
+        self.$apply()
+      }
+      self.$apply()
+    }
+  }
+
+</script>

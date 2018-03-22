@@ -1,0 +1,148 @@
+<style lang="less" scoped>
+.lesson-order-container{
+  .title {
+    padding: 12rpx 30rpx 0;
+    font-size: 32rpx;
+  }
+  .order-details {
+    .order-wrapper {
+      display: flex;
+      padding: 20rpx;
+      .order-img {
+        flex: 1;
+        image {
+          display: block;
+          width: 100%;
+        }
+      }
+      .order-text {
+        flex: 1;
+        margin-left: 40rpx;
+        .lesson-name {
+          font-size: 28rpx;
+        }
+        .lesson-price {
+          color: #dd5540;
+        }
+        .lesson-campus {
+          font-size: 24rpx;
+        }
+      }
+    }
+  }
+  .total-price {
+    color: #dd5540;
+  }
+  .button-sp-area{
+    margin: 0 auto;
+    padding-top: 15px;
+    width: 40%;
+    .pay-btn {
+      border: 1px solid #dd5044;
+      color: #dd5044;
+    }
+  }
+  .mini-btn{
+      margin-right: 5px;
+  }
+}
+
+</style>
+<template>
+  <view class="lesson-order-container">
+    <view class="weui-panel weui-panel_access">
+      <view class="weui-panel__hd">订单名称</view>
+      <view class="weui-panel__bd">
+        <view class="title"></view>
+          <view class="order-details">
+            <view class="order-wrapper">
+              <view class="order-img">
+                <wxc-cc class="demo">
+                  <image class="demo__pic" src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"></image>
+                </wxc-cc>
+              </view>
+              <view class="order-text">
+                <view class="lesson-name">{{entity.name}}</view>
+                <view class="lesson-price"><wxc-price icon="sub">{{entity.price}}</wxc-price></view>
+                <view class="lesson-campus">校区：天府校区</view>
+                <view class="lesson-campus">地址：成都市武侯区天久北巷56号</view>
+              </view>
+            </view>
+          </view>
+      </view>
+      <view class="weui-form-preview">
+        <view class="weui-form-preview__bd">
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">原价</view>
+            <view class="weui-form-preview__value"><wxc-price>{{entity.price}}</wxc-price></view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label">优惠</view>
+            <view class="weui-form-preview__value">-<wxc-price>0.0</wxc-price></view>
+          </view>
+          <view class="weui-form-preview__item">
+            <view class="weui-form-preview__label"></view>
+            <view class="weui-form-preview__value total-price"><wxc-price>{{entity.price}}</wxc-price></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button-sp-area">
+      <button class="weui-btn pay-btn" type="primary" plain="true" @tap="handlePay">立即支付</button>
+    </view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import * as services_lesson_order from '../../services/lesson/detail'
+
+  export default class Order extends wepy.page {
+    config = {
+      navigationBarTitleText: '立即订购',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+        'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
+        'wxc-price': '../../packages/@minui/wxc-price/dist/index'
+      }
+    }
+
+    data = {
+      id: null,
+      entity: null
+    }
+    methods = {
+      handlePay () {
+        wepy.showLoading({
+          title: '支付中~~~',
+          mask: true
+        })
+        setTimeout(function(){
+          wepy.hideLoading()
+        },2000)
+      }
+    }
+    onLoad(params) {
+      let self = this
+      console.log('params',params)
+      self.id = params.id
+      self.$apply()
+    }
+    onShow () {
+      let self = this
+      const { id } = self.data
+      services_lesson_order.query({
+        params: {
+          id,
+          _info: 'schools'
+        },
+        success: (res) => {
+          self.entity = res
+          self.$apply()
+          console.log(res)
+        }
+      })
+    }
+  }
+
+</script>

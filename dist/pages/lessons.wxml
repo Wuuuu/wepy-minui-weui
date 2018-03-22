@@ -1,0 +1,59 @@
+
+  <view class="_3c09646">
+    
+<view class="lessons-search _3c09646">
+  <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+      <view class="weui-search-bar__box">
+        <icon class="weui-icon-search_in-box" type="search" size="14"/>
+        <input type="text" class="weui-search-bar__input" placeholder="{{$SearchBar$placeholder}}" value="{{$SearchBar$inputVal}}" focus="{{$SearchBar$inputShowed}}" bindinput="$SearchBar$inputTyping"/>
+        <view class="weui-icon-clear"  wx:if="{{$SearchBar$inputVal.length > 0}}" bindtap="$SearchBar$clearInput">
+          <icon type="clear" size="14"/>
+        </view>
+      </view>
+      <label class="weui-search-bar__label" hidden="{{$SearchBar$inputShowed}}" bindtap="$SearchBar$showInput">
+        <icon class="weui-icon-search" type="search" size="14"/>
+        <view class="weui-search-bar__text">{{$SearchBar$placeholder}}</view>
+      </label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!$SearchBar$inputShowed}}" bindtap="$SearchBar$hideInput">{{$SearchBar$hideText}}</view>
+  </view>
+  <view class="search-placeholder"/>
+  </view>
+
+    <view class="page _3c09646">
+      <view class="page__bd _3c09646">
+        <view class="weui-tab _3c09646">
+          <view class="weui-navbar _3c09646">
+            <block class="_3c09646" wx:for="{{tabLists}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}} _3c09646" bindtap="tabClick" data-id="{{item.id}}">
+                <view class="weui-navbar__title _3c09646">{{item.name}}</view>
+              </view>
+            </block>
+            <view class="weui-navbar__slider _3c09646" style="width: {{tabWidth}}rpx; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"/>
+          </view>
+          <view class="weui-tab__panel _3c09646">
+            <block class="_3c09646" wx:for="{{tabLists}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+              <view class="weui-tab__content _3c09646" hidden="{{activeIndex != index}}">
+                <view class="lesson _3c09646">
+                  <block class="_3c09646" wx:for="{{initCourse}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+                    <view class="lesson-img _3c09646" bindtap="toLessonDetail" data-wpytolessondetail-a="{{item.id}}">
+                      <image src="{{ item.poster || 'http://th-test.oss-cn-shanghai.aliyuncs.com/upload/teach/image/20180118/120727963_50599.png?Expires=4671922048&OSSAccessKeyId=LTAIrAATEK6r8Lq3&Signature=ijxaDrXrsIoMlBKmSrsEzh1sApE%3D'}} " mode="widthFix" class="_3c09646"/>
+                      <view class="shade _3c09646">
+                        <view class="shade-text _3c09646">
+                          {{item.name}}
+                        </view>
+                      </view>
+                    </view>
+                  </block>
+                </view>
+              </view>
+            </block>  
+          </view>
+        </view>
+      </view>
+    </view>
+    <block  wepy:if="{{total == initCourse.length}}" class="_3c09646">
+      <wxc-loadmore is-end="true" text="没有更多了" class="_3c09646"/>
+    </block>
+  </view>

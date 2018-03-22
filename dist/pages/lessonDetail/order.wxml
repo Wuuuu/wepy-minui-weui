@@ -1,0 +1,43 @@
+
+  <view class="lesson-order-container _32bdc54">
+    <view class="weui-panel weui-panel_access _32bdc54">
+      <view class="weui-panel__hd _32bdc54">订单名称</view>
+      <view class="weui-panel__bd _32bdc54">
+        <view class="title _32bdc54"/>
+          <view class="order-details _32bdc54">
+            <view class="order-wrapper _32bdc54">
+              <view class="order-img _32bdc54">
+                <wxc-cc class="demo _32bdc54">
+                  <image class="demo__pic _32bdc54" src="https://ceshi.conpanda.cn/upload/teach/image/20171013/054501825_50498.png" mode="widthFix"/>
+                </wxc-cc>
+              </view>
+              <view class="order-text _32bdc54">
+                <view class="lesson-name _32bdc54">{{entity.name}}</view>
+                <view class="lesson-price _32bdc54"><wxc-price icon="sub" class="_32bdc54">{{entity.price}}</wxc-price></view>
+                <view class="lesson-campus _32bdc54">校区：天府校区</view>
+                <view class="lesson-campus _32bdc54">地址：成都市武侯区天久北巷56号</view>
+              </view>
+            </view>
+          </view>
+      </view>
+      <view class="weui-form-preview _32bdc54">
+        <view class="weui-form-preview__bd _32bdc54">
+          <view class="weui-form-preview__item _32bdc54">
+            <view class="weui-form-preview__label _32bdc54">原价</view>
+            <view class="weui-form-preview__value _32bdc54"><wxc-price class="_32bdc54">{{entity.price}}</wxc-price></view>
+          </view>
+          <view class="weui-form-preview__item _32bdc54">
+            <view class="weui-form-preview__label _32bdc54">优惠</view>
+            <view class="weui-form-preview__value _32bdc54">-<wxc-price class="_32bdc54">0.0</wxc-price></view>
+          </view>
+          <view class="weui-form-preview__item _32bdc54">
+            <view class="weui-form-preview__label _32bdc54"/>
+            <view class="weui-form-preview__value total-price _32bdc54"><wxc-price class="_32bdc54">{{entity.price}}</wxc-price></view>
+          </view>
+        </view>
+      </view>
+    </view>
+    <view class="button-sp-area _32bdc54">
+      <button class="weui-btn pay-btn _32bdc54" type="primary" plain="true" bindtap="handlePay">立即支付</button>
+    </view>
+  </view>

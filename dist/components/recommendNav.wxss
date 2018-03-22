@@ -1,0 +1,1 @@
+.recommend-nav{background:#efefef}.recommend-nav .recommend-box{display:flex;padding:16rpx 28rpx}.recommend-nav .recommend-box .name{flex:1;padding-left:12rpx;border-left:4rpx solid #dd5044;font-size:32rpx}.recommend-nav .recommend-box .icon{flex:0 0 40rpx}.recommend-nav .recommend-box .icon image{display:block;padding-top:5rpx;width:40rpx;height:40rpx}

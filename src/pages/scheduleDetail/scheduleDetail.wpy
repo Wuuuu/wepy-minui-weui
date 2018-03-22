@@ -1,0 +1,152 @@
+<style lang="less" scoped>
+.schedule-detail-container {
+  .schedule-name {
+    padding: 16rpx 20rpx;
+    height: 70rpx;
+    line-height: 70rpx;
+    letter-spacing: 3rpx;
+    font-size: 32rpx;
+    background: #efefef;
+  }
+  .weui-panel {
+    margin-top: 0;
+  }
+  .weui-cell__hd {
+    font-size: 32rpx;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .cell__text {
+    font-size: 28rpx;
+    color: rgba(0, 0, 0, 0.8);
+  }
+  .comment{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #EEE;
+    .button-sp-area{
+      margin: 0 auto;
+      padding: 16rpx 0;
+      width: 40%;
+      .comment-btn {
+        border: none;
+        color: #fff;
+        background: rgb(104, 207, 157);
+      }
+    }
+  }
+}
+</style>
+<template>
+  <view class="schedule-detail-container">
+    <view class="schedule-name">{{entity.course.name}}</view>
+    <view class="weui-panel">
+        <view class="weui-panel__bd">
+          <view class="weui-media-box weui-media-box_small-appmsg">
+            <view class="weui-cells weui-cells_in-small-appmsg">
+              <view class="weui-cell weui-cell_access" >
+                <view class="weui-cell__hd">教师：</view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <view class="cell__text">{{entity.teacher.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access" >
+                <view class="weui-cell__hd">教室：</view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <view class="cell__text">{{entity.classroom.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access" >
+                <view class="weui-cell__hd">班级：</view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <view class="cell__text">{{entity.classroom.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access" >
+                <view class="weui-cell__hd">日期：</view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <view class="cell__text">{{date}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access" >
+                <view class="weui-cell__hd">时间：</view>
+                <view class="weui-cell__bd weui-cell_primary">
+                  <view class="cell__text">{{startTime}} - {{endTime}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+      </view>
+    </view>
+    <view class="schedule-name">评价({{comments.length}}条)</view>
+    <Comment class="comment" :comments.sync="comments" />
+    <view class="comment">
+      <view class="button-sp-area">
+        <button class="weui-btn comment-btn" type="primary" plain="true" @tap="handleToCourseEvalution">我要评价</button>
+      </view>
+    </view>
+    <view style="height: 130rpx;"></view>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Comment from '../../components/LessonDetails/comment'
+  import moment from '../../utils/moment'
+  import * as services_schedule_detail from '../../services/schedule/schedule'
+
+  export default class ScheduleDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '课表详情',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044'
+    }
+    components = {
+      Comment
+    }
+    data = {
+      id: '',
+      entity: null,
+      date: null,
+      startTime: null,
+      endTime: null,
+      comments: []
+    }
+    methods = {
+      handleToCourseEvalution () {
+        const { entity } = this.data
+        entity.objType = 'teach_schedule'
+        console.log('entity',entity)
+        this.$navigate(`./courseEvaluation`, {...entity})
+      }
+    }
+    onLoad(params) {
+      let self = this
+      let time = moment().format('YYYY-MM-DD')
+      self.id = params.id
+    }
+    onShow () {
+      let self = this 
+      services_schedule_detail.info({
+        params: {
+          id: self.id,
+          _info: 'school.course.comments<student>.teacher.classroom'
+        },
+        success: (res) => {
+          let courseDate = res.startTime
+          let startTime = res.startTime
+          let endTime = res.endTime
+          let date = moment(courseDate).format('YYYY-MM-DD')
+          let coursestartTime = moment(startTime).format('HH:mm')
+          let courseendTime = moment(endTime).format('HH:mm')
+          self.entity = res
+          self.date = date
+          self.startTime = coursestartTime
+          self.endTime = courseendTime
+          self.comments = res.comments
+          self.$apply()
+        }
+      })
+    }
+  }
+
+</script>

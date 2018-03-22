@@ -1,0 +1,29 @@
+<style lang="less">
+</style>
+<template>
+  <view class="about-container">
+    this is about page
+  </view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class About extends wepy.page {
+    config = {
+      navigationBarTitleText: '关于',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044'
+    }
+    components = {
+    }
+    data = { 
+    }
+    methods = {
+    }
+    onLoad () {
+      console.log('about')
+    }
+}
+
+</script>

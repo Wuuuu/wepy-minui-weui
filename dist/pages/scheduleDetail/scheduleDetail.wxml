@@ -1,0 +1,64 @@
+
+  <view class="schedule-detail-container _a26edb2">
+    <view class="schedule-name _a26edb2">{{entity.course.name}}</view>
+    <view class="weui-panel _a26edb2">
+        <view class="weui-panel__bd _a26edb2">
+          <view class="weui-media-box weui-media-box_small-appmsg _a26edb2">
+            <view class="weui-cells weui-cells_in-small-appmsg _a26edb2">
+              <view class="weui-cell weui-cell_access _a26edb2">
+                <view class="weui-cell__hd _a26edb2">教师：</view>
+                <view class="weui-cell__bd weui-cell_primary _a26edb2">
+                  <view class="cell__text _a26edb2">{{entity.teacher.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access _a26edb2">
+                <view class="weui-cell__hd _a26edb2">教室：</view>
+                <view class="weui-cell__bd weui-cell_primary _a26edb2">
+                  <view class="cell__text _a26edb2">{{entity.classroom.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access _a26edb2">
+                <view class="weui-cell__hd _a26edb2">班级：</view>
+                <view class="weui-cell__bd weui-cell_primary _a26edb2">
+                  <view class="cell__text _a26edb2">{{entity.classroom.name}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access _a26edb2">
+                <view class="weui-cell__hd _a26edb2">日期：</view>
+                <view class="weui-cell__bd weui-cell_primary _a26edb2">
+                  <view class="cell__text _a26edb2">{{date}}</view>
+                </view>
+              </view>
+              <view class="weui-cell weui-cell_access _a26edb2">
+                <view class="weui-cell__hd _a26edb2">时间：</view>
+                <view class="weui-cell__bd weui-cell_primary _a26edb2">
+                  <view class="cell__text _a26edb2">{{startTime}} - {{endTime}}</view>
+                </view>
+              </view>
+            </view>
+          </view>
+      </view>
+    </view>
+    <view class="schedule-name _a26edb2">评价({{comments.length}}条)</view>
+    
+  <block class="_f033ce8 comment _a26edb2" wx:for="{{$Comment$comments}}" wx:for-index="$Comment$index" wx:for-item="$Comment$item" wx:key="$Comment$key">
+    <view class="comment _f033ce8">
+      <view class="comment-avatar _f033ce8">
+        <image class="avatar _f033ce8" src="{{$Comment$item.student.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}"/>
+      </view>
+      <view class="comment-content _f033ce8">
+        <view class="userName _f033ce8">{{$Comment$item.student.name}}</view>
+        <view class="content _f033ce8">{{$Comment$item.content}}</view>
+      </view>
+      <view class="comment-time _f033ce8">
+        <view class="time _f033ce8">{{$Comment$item.commentTime}}</view>
+      </view>
+    </view>
+  </block>
+    <view class="comment _a26edb2">
+      <view class="button-sp-area _a26edb2">
+        <button class="weui-btn comment-btn _a26edb2" type="primary" plain="true" bindtap="handleToCourseEvalution">我要评价</button>
+      </view>
+    </view>
+    <view style="height: 130rpx;" class="_a26edb2"/>
+  </view>

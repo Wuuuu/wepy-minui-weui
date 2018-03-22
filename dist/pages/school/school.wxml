@@ -1,0 +1,17 @@
+
+  <view>
+    <view class="school">
+      <view class="school-name" slot="title">豪韵艺术培训机构--天艺校区</view>
+      <view class="school-intro"><text>{{schoolIntro}}</text></view>
+    </view>
+    <view class="school-envionment">
+      <view>校区环境</view>
+    </view>
+    <view class="school-display">
+      <block wx:for="{{[1,2,3,4,5,6]}}" wx:for-index="index" wx:for-item="item" wx:key="key"> 
+        <view class="display-box">
+          <image src="../../assets/school/school_03.png" mode="widthFix"/>
+        </view>
+      </block>
+    </view>
+  </view>

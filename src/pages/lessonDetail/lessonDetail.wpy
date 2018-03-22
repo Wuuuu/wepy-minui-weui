@@ -1,0 +1,262 @@
+<style lang="less" scoped>
+.lesson-detail_banner {
+  width: 100%;
+  image {
+    display: block;
+    width: 100%;
+  }
+}
+.wxc-tab-panel {
+  background: #efefef;
+}
+.course-intro {
+  margin-bottom: 24rpx;
+}
+.lesson-price {
+  color:#DE5145;
+}
+.course-name {
+  font-size: 32rpx;
+  color: #000;
+}
+.comment-box {
+  margin-bottom: 60rpx;
+}
+.handle-action {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  width: 100%;
+  height: 100rpx;
+  background: #666;
+  .make-an-oppointment, .order-instantly {
+    display: flex;
+    flex: 1;
+    .btn-icon {
+      flex: 2;
+      image {
+        position: relative;
+        top: 32rpx;
+        left: 65%;
+        display: block;
+        width: 36rpx;
+        height: 36rpx;
+      }
+    }
+    .btn-text {
+      flex: 3;
+      height: 100rpx;
+      line-height: 100rpx;
+      color: #fff;
+    }
+  }
+}
+.make-an-oppointment {
+  background: #DE5145;
+}
+.order-instantly {
+  background: #4C8BF5;
+}
+.display-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 16rpx;
+  .display {
+    flex: 0 0 50%;
+    image {
+      display: block;
+      margin: 0 auto;
+      padding: 16rpx 0;
+      width: 95%;
+      border-radius: 16rpx;
+    }
+  }
+}
+.lesson-detail-teacher {
+  .weui-panel__bd {
+    border-bottom: 1rpx solid #efefef;
+    image {
+      border-radius: 50%;
+    }
+  }
+}
+</style>
+<template>
+  <view class="lesson-detail">
+    <view class="lesson-detail_banner">
+      <image src="{{entity.poster}}" mode="widthFix" />
+    </view>
+    <wxc-tab 
+    bind:tabchange="onClick" 
+    default-index="{{0}}" 
+    component-id="c4"
+    animate="{{true}}"
+    active-text-color="#dd5044"
+    active-line-color="#dd5044">
+      <wxc-tab-panel class="wxc-tab-panel" wx:for="{{tabs}}" wx:for-item="tab" wx:key="index" tab-index="{{index}}" component-id="c4" label="{{tab.title}}">
+        <view class="weui-panel weui-panel_access course-intro">
+          <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__title weui-media-box__title_in-text">{{entity.name}}</view>
+                <view class="weui-media-box__desc">{{entity.number || 10}}人报名</view>
+            </view>
+            <view class="weui-media-box weui-media-box_text">
+                <view class="weui-media-box__title weui-media-box__title_in-text">
+                  <wxc-price decimal="1" icon="sub" class="lesson-price">{{entity.price || 4800}}</wxc-price>
+                </view>
+                <view class="weui-media-box__desc">上课地点：成都市武侯区龙江路19号</view>
+            </view>
+          </view>
+        </view>
+        <!-- 评价 -->
+        <view class="comment-box" wx:if="{{activeIndex == 2}}">
+          <block wx:if="{{comments.length > 0 ? true : false}}">
+            <Comment class="comment" :comments.sync="comments" />
+            <wxc-loadmore is-end="true" text="没有更多" icon="true"></wxc-loadmore>
+          </block>
+          <block wx:else>
+            <wxc-abnor type="FEED" title="还没有任何评论">
+            </wxc-abnor>
+            <!-- <view>1231</view>
+            <view>1231</view>
+            <view>1231</view>
+            <view>1231</view> -->
+          </block>
+        </view>
+        <!-- 简介 -->
+        <view class="lesson-detail-brief" wx:if="{{activeIndex == 0}}">
+            <view class="weui-panel">
+            <view class="weui-panel__hd course-name">课程名称：{{entity.name}}</view>
+              <view class="weui-panel__bd">
+                <view class="weui-media-box weui-media-box_text">
+                  <view class="weui-media-box__desc">课程内容：{{entity.brief}}
+                  </view>
+                </view>
+            </view>
+          </view>
+          <RecommentNav :msg="recommend" :isShow="isShowIcon"/>
+          <view class="lesson-school-display">
+            <view class="display-wrapper">
+              <repeat for="{{[1,2,3,4]}}" item="item">
+                <view class="display">
+                  <image src="../../assets/school/school_0{{item}}.png" mode="widthFix" />
+                </view>
+              </repeat>
+            </view>
+          </view>
+        </view>
+        <!-- 老师 -->
+        <view class="lesson-detail-teacher" wx:if="{{activeIndex == 1}}">
+          <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__hd">任课老师</view>
+            <repeat for="{{entity.teachers}}" key="key" index="index" item="item">
+              <view class="weui-panel__bd ">
+                <view class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                  <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                    <image class="weui-media-box__thumb" src="{{item.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}" />
+                  </view>
+                  <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                    <view class="weui-media-box__title">{{item.name}}</view>
+                    <view class="weui-media-box__desc">{{item.resume}}</view>
+                  </view>
+                </view>
+              </view>
+            </repeat>
+          </view>
+            <wxc-loadmore is-end="true" text="没有更多" icon="true"></wxc-loadmore>
+        </view>
+        <!-- ////////////////////////////////// -->
+        <view style="height: 110rpx"></view>
+        <view class="handle-action">
+          <view class="make-an-oppointment" @tap="handleAction('appointment')">
+            <view class="btn-icon">
+              <image src="../../assets/icon/message.png" />
+            </view>
+            <view class="btn-text">预约试课</view>
+          </view>
+          <view class="order-instantly" @tap="handleAction('order')">
+            <view class="btn-icon">
+              <image src="../../assets/icon/shopcat.png" />
+            </view>
+            <view class="btn-text">立即订购</view>
+          </view>
+        </view>
+        <!-- ////////////////////////////////// -->
+      </wxc-tab-panel>
+    </wxc-tab>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import Comment from '../../components/LessonDetails/comment'
+  import RecommentNav from '../../components/recommendNav'
+  import { imgRootUrl } from '../../config/config'
+  import * as services_lesson_detail from '../../services/lesson/detail'
+
+  export default class LessonDetail extends wepy.page {
+    config = {
+      navigationBarTitleText: '课程详情',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+        'wxc-loadmore': '../../packages/@minui/wxc-loadmore/dist/index',
+        'wxc-price': '../../packages/@minui/wxc-price/dist/index',
+        'wxc-tab': '../../packages/@minui/wxc-tab/dist/index',
+        'wxc-tab-panel': '../../packages/@minui/wxc-tab/dist/panel',
+        'wxc-abnor': '../../packages/@minui/wxc-abnor/dist/index',
+      }
+    }
+    components = {
+      Comment,
+      RecommentNav
+    }
+    data = {
+      recommend: {title: '教学环境'},
+      isShowIcon: true,
+      activeIndex: 0,
+      entity: null,
+      comments: [],
+      tabs: [{title: '简介'}, {title: '老师'}, {title: '评价'}]
+    }
+    methods = {
+      onClick (e) {
+        this.activeIndex = e.detail.key
+        console.log(`ComponentId:${e.detail.componentId},you selected:${e.detail.key}`)
+      },
+      handleAction (params) {
+        const { entity } = this.data
+        if ( params == 'appointment' ) {
+          this.$navigate(`/pages/lessonDetail/${params}`, entity)
+        } 
+        if (params == 'order' ) {
+          let data = {
+            id: entity.id,
+            school: entity.course_schools
+          }
+          console.log('data',data)
+          this.$navigate(`/pages/lessonDetail/${params}`, data)
+        }
+      }
+    }
+    onLoad(params) {
+      let self = this
+      wepy.showLoading({
+        title: '加载中...',
+      })
+      services_lesson_detail.query({
+        params: {
+          id: params.id, 
+          _info: 'subject.classroom.comments<student>.teachers.course_schools'},
+        success: (res) => {
+          self.entity = res
+          self.comments = res.comments
+          self.$apply()
+        },
+        complete: () => {
+          wepy.hideLoading()
+        }
+      })
+    }
+  }
+
+</script>

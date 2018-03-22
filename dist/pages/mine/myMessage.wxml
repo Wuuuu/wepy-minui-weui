@@ -1,0 +1,17 @@
+
+<view>
+  <block wx:for="{{noticeList}}" wx:for-index="index" wx:for-item="item" wx:key="key">
+    <view class="comment" bindtap="toDetail" data-wpytodetail-a="{{item}}">
+      <view class="comment-avatar">
+        <image class="avatar" src="../../assets/icon/iconfont-notice.png"/>
+      </view>
+      <view class="comment-content">
+        <view class="userName">{{item.title}}</view>
+        <view class="content">{{item.content}}</view>
+      </view>
+      <view class="comment-time">
+        <view class="time">{{item.createTime}}</view>
+      </view>
+    </view>
+  </block>
+</view>

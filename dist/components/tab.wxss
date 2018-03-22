@@ -1,0 +1,5 @@
+/*!
+ * WeUI v1.1.1 (https://github.com/weui/weui-wxss)
+ * Copyright 2017 Tencent, Inc.
+ * Licensed under the MIT license
+ */.weui-navbar._bf7a670{display:-webkit-box;display:-webkit-flex;display:flex;position:absolute;z-index:500;top:0;width:100%;border-bottom:1rpx solid #ccc}.weui-navbar__item._bf7a670{position:relative;display:block;-webkit-box-flex:1;-webkit-flex:1;flex:1;padding:13px 0;text-align:center;font-size:0}.weui-navbar__item.weui-bar__item_on._bf7a670{color:#dd5044}.weui-navbar__slider._bf7a670{position:absolute;content:" ";left:0;bottom:0;width:6em;height:3px;background-color:#dd5044;-webkit-transition:-webkit-transform .3s;transition:-webkit-transform .3s;transition:transform .3s;transition:transform .3s,-webkit-transform .3s}.weui-navbar__title._bf7a670{display:inline-block;font-size:15px;max-width:8em;width:auto;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}page._bf7a670,.page._bf7a670,.page__bd._bf7a670{height:100%}.page__bd._bf7a670{padding-bottom:0}.weui-tab__content._bf7a670{padding-top:60px;text-align:center}

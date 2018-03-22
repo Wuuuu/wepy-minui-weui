@@ -1,0 +1,50 @@
+<style lang="less" scoped>
+  .lesson-img {
+    width: 100%;
+    height: 400rpx;
+    image {
+      display: block;
+      margin: 0 auto;
+      padding: 24rpx 0;
+      width: 90%;
+      // height: auto;
+    }
+  }
+</style>
+
+<template>
+  <view class="lesson">
+    <repeat for="{{lessonImg}}" key="key" index="index" item="item">
+      <view class="lesson-img" @tap="toLessonDetail">
+        <image src="{{item.url}}" mode="widthFix"/>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+
+export default class LessonItem extends wepy.component {
+  props = {
+
+  };
+
+  data = {
+    lessonImg: [
+      {url: '../assets/lesson/vocal_music_01.png'},
+      {url: '../assets/lesson/vocal_music_02.png'},
+      {url: '../assets/lesson/vocal_music_03.png'},
+    ]
+  };
+
+  method = {
+    toLessonDetail(name) {
+      console.log('1111')
+      this.$navigate(`pages/index`);
+    }
+  };
+  events = {
+  }
+}
+</script>

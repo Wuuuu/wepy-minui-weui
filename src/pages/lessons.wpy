@@ -1,0 +1,257 @@
+<style lang="less" scoped>
+.weui-navbar {
+  z-index: 1;
+}
+.lesson-img {
+  position: relative;
+  width: 100%;
+  image {
+    display: block;
+    margin: 20rpx auto;
+    // padding: 36rpx 0 0;
+    width: 90%;
+    opacity: 0.9;
+    border-radius: 18rpx;
+    // -webkit-filter: brightness(0.60); /* Chrome, Safari, Opera */
+    // filter: brightness(0.60);
+  }
+  .shade {
+    position: absolute;
+    left: 38rpx;
+    top: 0;
+    text-align: center;
+    height: 100%;
+    width: 90%;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 18rpx;
+    color: #fff;
+    .shade-text {
+      margin-top: 151.125rpx;
+    }
+  }
+}
+
+</style>
+<template>
+  <view>
+    <SearchBar class="lessons-search"/>
+    <view class="page">
+      <view class="page__bd">
+        <view class="weui-tab">
+          <view class="weui-navbar">
+            <repeat for="{{tabLists}}" key="key" index="index" item="item">
+              <view id="{{index}}" class="weui-navbar__item {{activeIndex == index ? 'weui-bar__item_on' : ''}}" @tap="tabClick" data-id="{{item.id}}">
+                <view class="weui-navbar__title">{{item.name}}</view>
+              </view>
+            </repeat>
+            <view class="weui-navbar__slider" style="width: {{tabWidth}}rpx; transform: translateX({{sliderOffset}}px); -webkit-transform: translateX({{sliderOffset}}px);"></view>
+          </view>
+          <view class="weui-tab__panel">
+            <repeat for="{{tabLists}}" key="key" item="item" index="index">
+              <view class="weui-tab__content" hidden="{{activeIndex != index}}">
+                <view class="lesson">
+                  <repeat for="{{initCourse}}" key="key" index="index" item="item">
+                    <view class="lesson-img" @tap="toLessonDetail({{item.id}})">
+                      <image src="{{ item.poster || 'http://th-test.oss-cn-shanghai.aliyuncs.com/upload/teach/image/20180118/120727963_50599.png?Expires=4671922048&OSSAccessKeyId=LTAIrAATEK6r8Lq3&Signature=ijxaDrXrsIoMlBKmSrsEzh1sApE%3D'}} " mode="widthFix"/>
+                      <view class="shade">
+                        <view class="shade-text">
+                          {{item.name}}
+                        </view>
+                      </view>
+                    </view>
+                  </repeat>
+                </view>
+              </view>
+            </repeat>  
+          </view>
+        </view>
+      </view>
+    </view>
+    <block wepy:if="{{total == initCourse.length}}">
+      <wxc-loadmore is-end="true" text="没有更多了"></wxc-loadmore>
+    </block>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import SearchBar from '../components/searchbar'
+  import * as services_lesson_subject from '../services/lesson/subject'
+
+
+  export default class Lessons extends wepy.page {
+    config = {
+      navigationBarTitleText: '课程',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      enablePullDownRefresh: true,
+      usingComponents: {
+        'wxc-loadmore': '../packages/@minui/wxc-loadmore/dist/index'
+      }
+    }
+    components = {
+      SearchBar
+    }
+    data = {
+      activeIndex: 0,  // tab当前索引
+      toIndex: null,
+      sliderOffset: 0,  
+      sliderLeft: 0,
+      tabWidth: '',   // tab的宽度
+      tabLists: null, //tab内容列表
+      total: null,  // tab下的课程总数
+      initCourse: null, 
+      courseLists: null,
+      subjectId: null,
+      defaultQuery: {
+        current: 1,
+        pagesize: 3,
+        status: 0
+      },
+      refreshing: false,
+      loading: false
+    }
+    methods = {
+      // 点击查询当前tab下的课程列表
+      async tabClick (e) {
+        let self = this
+        let id = e.currentTarget.dataset.id
+        await self.queryLesson(id)
+        self.sliderOffset = e.currentTarget.offsetLeft
+        self.activeIndex = e.currentTarget.id
+        self.subjectId = id
+        self.$apply()
+      },
+      toLessonDetail (id) {
+        this.$navigate(`./lessonDetail/lessonDetail`,{id})
+      }
+    }
+    onLoad (params, data) {
+        let self = this
+        if(data.preload){
+          self.activeIndex = data.preload.activeIndex
+          self.$apply()
+        }
+    }
+    onShow () {
+      const { refreshing, loading, initCourse, tabLists } = this.data;
+      if (!refreshing && !loading && initCourse== null && tabLists == null) {
+        wepy.showLoading({
+          title: '加载中'
+        })
+        this.query()
+      }
+    }
+    onPullDownRefresh () {
+      const { subjectId } = this.data  // 获取当前tab的id
+      this.refresh(subjectId)
+    }
+    getWidth () {
+      let self = this
+      var sliderWidth = 0 // 需要设置slider的宽度，用于计算中间位置
+      wepy.getSystemInfo({
+        success: (res) => {
+          self.tabWidth = 2 * (res.windowWidth / self.tabLists.length )
+          self.sliderOffset = (res.windowWidth / self.tabLists.length * self.activeIndex) 
+          self.$apply()
+        }
+      })
+    }
+    // 查询科目
+    query (queryParams, refresh) {
+      let self = this
+      if (refresh) {
+        self.refreshing = true
+        self.queryLesson(queryParams)
+        wepy.showNavigationBarLoading()
+        self.$apply()
+      }
+      else {
+        self.loading = true
+        services_lesson_subject.query({
+          success: (res) => {
+            const { list } = res
+            let subjectId = list[0].id
+            self.tabLists = list
+            self.subjectId = subjectId
+            self.queryLesson(subjectId,queryParams)
+            self.$apply()
+          },
+          complete: (res) => {
+            self.getWidth()
+            if (refresh) {
+              self.refreshing = false
+              self.$apply()
+            }
+            else { 
+              self.loading = false
+            }
+            wepy.hideNavigationBarLoading()
+            wepy.stopPullDownRefresh()
+          },
+        })
+        self.$apply()
+      }
+    }
+    // 查询科目对应的课程列表
+    queryLesson (subjectId, pagesize) {
+      let self = this
+      const { defaultQuery, initCourse } = self.data
+      let params = {
+        ...defaultQuery,
+        subjectId
+      }
+      services_lesson_subject.queryCourse({
+        params,
+        success: (res) => {
+          self.initCourse = res.list
+          self.total = res.total
+          self.$apply()
+        },
+        complete: () => {
+          wepy.hideLoading()
+          wepy.stopPullDownRefresh()
+          wepy.hideNavigationBarLoading()
+        }
+      })
+    }
+    // 刷新页面
+    refresh (subjectId) {
+      this.query(subjectId, true)
+    }
+    // 页面上拉触底事件的处理函数
+    onReachBottom () {
+      let self = this
+      const { loading, subjectId, total, defaultQuery, initCourse } = self.data
+      const { pagesize } = defaultQuery
+      let hasMore = (total > initCourse.length)
+      if (!loading && hasMore) {
+        wepy.showLoading({
+          title: '加载更多中~'
+        })
+        let page = pagesize + 4
+        this.queryCourse( subjectId, page )
+      }
+    }
+    // 上拉触底加载更多
+    queryCourse (subjectId, pagesize) {
+      let self = this
+      const { defaultQuery, initCourse } = self.data
+      let params = {
+        ...defaultQuery,
+        subjectId,
+        pagesize
+      }
+      services_lesson_subject.queryCourse({
+        params,
+        success: (res) => {
+          self.initCourse = res.list
+          // self.total = res.total
+          self.$apply()
+          wepy.hideLoading()
+        },
+        complete: () => {
+        }
+      })
+    }
+  }
+</script>

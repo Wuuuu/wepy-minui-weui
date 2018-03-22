@@ -1,0 +1,102 @@
+<style lang="less">
+.mycourses-container {
+  .course-wrapper {
+    .course-box {
+      display: flex;
+      margin-bottom: 24rpx;
+      justify-content: center;
+      align-items: center;
+      padding: 20rpx 16rpx;
+      background: #fff;
+      bottom: 1px solid #efefef;
+      .course-poster {
+        flex: 0 0 260rpx;
+        image {
+          display: block;
+          width: 100%;
+        }
+      }
+      .course-msg {
+        flex: 1;
+        padding-left: 20rpx;
+        .name {}
+        .brief {
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          overflow: hidden;
+          width: 380rpx;
+          font-size: 24rpx;
+          color: #777;
+        }
+        .progress {
+          padding: 8rpx 0 6rpx;
+          font-size: 28rpx;
+        }
+        .progress-bar {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .progress-bar-com {
+            flex: 1;
+          }
+          .text {
+            flex: 0 0 80rpx;
+            text-align: center;
+            font-size: 24rpx;
+          }
+        }
+      }
+    }
+  }
+}
+</style>
+<template>
+<view class="mycourses-container">
+  <view class="course-wrapper">
+    <repeat for="{{[1,1,1,1]}}">
+      <view class="course-box">
+        <view class="course-poster">
+          <image src="../../assets/index/index-course.jpg" mode="widthFix"/>
+        </view>
+        <view class="course-msg">
+          <view class="name">琵琶初级课程</view>
+          <view class="brief">简介：琵琶，是弹拨乐器首座， 拨弦类弦鸣乐器。木制，音箱呈半梨形，上装四弦，原先是用丝线，现多用钢丝、钢绳、尼龙制成。</view>
+          <view class="progress">课程班级：琵琶初级1班</view>
+          <view class="progress">课程进度：已上21课时 剩21课时</view>
+          <view class="progress-bar">
+            <wxc-progress percent="80" active-color="#ac89ff,#ff76a2" class="progress-bar-com">50%</wxc-progress>
+            <view class="text">70%</view>
+          </view>
+        </view>
+      </view>
+    </repeat>
+  </view>
+</view>
+</template>
+
+<script>
+  import wepy from 'wepy'
+
+  export default class MyCourses extends wepy.page {
+    config = {
+      navigationBarTitleText: '我的课程',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+        'wxc-progress': '../../packages/@minui/wxc-progress/dist/index',
+      }
+    }
+    data = {
+    }
+    methods = {
+      toDetail (item) {
+        this.$navigate('./myMessageDetail', item)
+      }
+    }
+    onLoad() {
+      let self = this
+    }
+  }
+
+</script>

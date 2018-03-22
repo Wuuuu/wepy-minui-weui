@@ -1,0 +1,1 @@
+.rating-container .star-box{display:inline-block;height:60rpx}.rating-container .star-box image{display:inline-block;margin:5rpx 5rpx;width:50rpx;height:50rpx}

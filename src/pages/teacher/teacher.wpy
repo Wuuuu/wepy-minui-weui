@@ -1,0 +1,200 @@
+<style lang="less">
+.teacher-container {
+  .header {
+    padding: 8rpx 16rpx 8rpx 24rpx;
+    .box {
+      display: flex;
+      padding: 30rpx 0rpx;
+      .star {
+        flex: 0 0 60rpx;
+        image {
+          display: block;
+          width: 40rpx;
+          height: 40rpx;
+        }
+      }
+      .title {
+        flex: 1;
+        line-height: 60rpx;
+        font-size: 40rpx;
+        color: #4B99BF;
+      }
+      .icon {
+        flex: 0 0 80rpx;
+      }
+    }
+  }
+  .swiper-box {
+    width: 100%;
+    .boy-swiper-item {
+      padding-top: 16rpx;
+      .content-box {
+        margin: 0 auto;
+        width: 90%;
+        background: #fff;
+        border-radius: 16rpx;
+        box-shadow: 0 0 12rpx #aaa;
+        .box-title{
+          padding-top: 8rpx;
+          text-align: center;
+        }
+        .teacher-wrapper {
+          .teacher-box {
+            display: flex;
+            padding: 12rpx 30rpx 20rpx;
+            .teacher-box-avatar {
+              flex: 0 0 160rpx;
+              image　{
+                display: block;
+                margin: 0 auto;
+                width: 140rpx;
+                height: 140rpx;
+                border-radius: 50%;
+                // border: 1px solid #efefef;
+              }
+            }
+            .teacher-box-msg {
+              flex: 1;
+              padding-left: 12rpx;
+              .name {
+                font-size: 36rpx;
+              }
+              .subject {
+                font-size: 28rpx;
+              }
+              .intro {
+                display: block;
+                width: 420rpx;
+                font-size: 24rpx;
+                color: #666;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+  
+</style>
+
+<template>
+  <view class="teacher-container">
+    <view class="header">
+      <view class="box">
+        <view class="star">
+          <wxc-cc>
+          <image src="../../assets/icon/StaroftheWeek.png" />
+          </wxc-cc>
+        </view>
+        <view class="title">
+          本周之最
+        </view>
+        <view class="icon" >
+          <view>{{swiperCurrentPage+1}}/{{imgUrls.length}}</view>
+        </view>
+      </view>
+    </view>
+    <view class="swiper-box">
+      <swiper class="boy-swiper"  autoplay="true" interval="3000"
+       duration="1000" 
+       circular current="{{swiperCurrentPage}}" @change="changeSwiper">
+        <repeat for="{{imgUrls}}" key="index" index="index" item="item">
+          <swiper-item class=" boy-swiper-item">
+            <view class="content-box">
+              <view class="box-title">教师之星</view>
+              <view class="teacher-wrapper">
+                <!-- <repeat for="{{list.recommendTeacher}}" item="teacher"> -->
+                  <view class="teacher-box" @tap="toListsDetails" data-id="{{teacher.id}}" data-action="{{teacher.personNo}}">
+                    <view class="teacher-box-avatar">
+                      <image src="{{teacher.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}" />
+                    </view>
+                    <view class="teacher-box-msg">
+                      <view class="name">李小璐</view>
+                      <view class="subject">油画、舞蹈 | 教学经验： 7年</view>
+                      <view class="intro">从小就开始画画了，以优异的成绩考上路鲁迅学院，至今已经有20多年绘画经验了</view>
+                    </view>
+                  </view>
+                <!-- </repeat> -->
+              </view>
+            </view>            
+          </swiper-item>
+        </repeat>
+      </swiper>
+    </view>
+    <NavigationBar :msg="msg" :isShow.sync="isShow"/>
+    <TeacherList :teacherData.sync="teacherList"/>
+    <wxc-loadmore is-end="{{true}}" text="到底啦"></wxc-loadmore>
+  </view>
+</template>
+<script>
+  import wepy from 'wepy'
+  import NavigationBar from '../../components/recommendNav'
+  import TeacherList from '../../components/teacherList'
+
+  import * as services_teacher from '../../services/teacher/teacher'
+
+  export default class Teacher extends wepy.page {
+    config = {
+      navigationBarTitleText: '老师介绍',
+      navigationBarTextStyle: 'white',
+      navigationBarBackgroundColor: '#dd5044',
+      usingComponents: {
+        'wxc-cc': '../../packages/@minui/wxc-cc/dist/index',
+        'wxc-loadmore': '../../packages/@minui/wxc-loadmore/dist/index'
+      }
+    }
+    components = {
+      NavigationBar,
+      TeacherList
+    }
+    data = {
+      swiperCurrentPage: 0,
+      msg: {title: '全部老师'},
+      isShow: true,
+      teacherList:[],
+      imgUrls: [
+      'http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+      'http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg'
+      ]
+    }
+    methods = {
+      changeSwiper(e) {
+        let self = this
+        self.swiperCurrentPage = e.detail.current
+        self.$apply()
+      }
+    }
+    onLoad() {
+      let self = this
+      services_teacher.query({
+        params: {
+          current: 1,
+          pageSize: 6,
+          isTeacher: 1
+        },
+        success: (res) => {
+          const { list } = res
+          self.teacherList = list
+          self.$apply()
+
+        },
+        complete: () => {
+        }
+      })
+    }
+    onReachBottom() {
+      console.log('到达底部')
+    }
+    loadMore() {
+      
+    }
+  }
+  
+
+</script>
