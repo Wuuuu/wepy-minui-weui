@@ -19,6 +19,11 @@ wepy build -w
 
 4、开始体验吧。
 
+## 工具类util的使用
+
+./src目录下的utils文件的util.js
+封装了一些常用的方法
+
 <!-- 
 ## 如何在已有的wepy项目中使用minui？
 
