@@ -1,1 +1,0 @@
-.subject-box-container .box{display:flex;justify-content:center;align-items:center;padding:16rpx}.subject-box-container .box .poster{width:400rpx}.subject-box-container .box .poster image{display:block;margin:0 auto;width:90%}.subject-box-container .box .desc{flex:1}.subject-box-container .box .desc .brief{font-size:28rpx;color:#888}

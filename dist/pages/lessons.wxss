@@ -1,2 +1,0 @@
-@import "./../components/searchbar.wxss";
-.weui-navbar._3c09646{z-index:1}.lesson-img._3c09646{position:relative;width:100%}.lesson-img image._3c09646{display:block;margin:20rpx auto;width:90%;opacity:.9;border-radius:18rpx}.lesson-img .shade._3c09646{position:absolute;left:38rpx;top:0;text-align:center;height:100%;width:90%;background:rgba(0,0,0,0.3);border-radius:18rpx;color:#fff}.lesson-img .shade .shade-text._3c09646{margin-top:151.125rpx}

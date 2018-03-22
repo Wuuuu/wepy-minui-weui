@@ -1,2 +1,0 @@
-@import "./../../components/payOrder.wxss";
-@import "./../../components/unpaidOrder.wxss";

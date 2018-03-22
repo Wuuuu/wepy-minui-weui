@@ -1,3 +1,0 @@
-@import "./../../components/subjectBox.wxss";
-@import "./../../components/LessonDetails/comment.wxss";
-.teacher-detail-container .mine-user{height:440rpx;background:#1DA362}.teacher-detail-container .mine-user .mine-user-box{padding-top:80rpx}.teacher-detail-container .mine-user .mine-user-box image{display:block;margin:0 auto;width:200rpx;height:200rpx;border-radius:50%}.teacher-detail-container .mine-user .mine-user-box text{display:block;padding-top:30rpx;text-align:center;color:#fff}.teacher-detail-container .comment-action{position:fixed;bottom:0;width:100%;background:#fff}.teacher-detail-container .comment-action .comment-btn{margin:12rpx auto;width:40%}
