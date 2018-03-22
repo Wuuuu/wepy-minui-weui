@@ -1,1 +1,1 @@
-{"navigationBarTitleText":"index","navigationBarTextStyle":"white","navigationBarBackgroundColor":"#dd5044","usingComponents":{}}
+{"navigationBarTitleText":"index","navigationBarTextStyle":"white","navigationBarBackgroundColor":"#dd5044","usingComponents":{"wxc-loading":"../../packages/@minui/wxc-loading/dist/index"}}

@@ -17,6 +17,7 @@ export default class Index extends wepy.page {
     navigationBarTextStyle: "white",
     navigationBarBackgroundColor: "#dd5044",
     usingComponents: {
+      'wxc-loading': '../../packages/@minui/wxc-loading/dist/index'
     }
   };
   components = {};
