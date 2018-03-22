@@ -1,109 +1,22 @@
-<style lang="less" scoped>
-  .mine-user {
-    height: 440rpx;
-    background: rgba(236, 141, 141, 0.6);
-    .mine-user-box {
-      padding-top: 80rpx;
-      margin: 0 260rpx;
-      image {
-        display: block;
-        margin: 0 auto;
-        width: 200rpx;
-        height: 200rpx;
-        border-radius: 50%;
-      }
-      text {
-        display: block;
-        padding-top: 12rpx;
-        text-align: center;
-        color: #fff;
-      }
-    }
-  }
-  .weui-panel__hd {
-    font-size: 28rpx;
-    color: #666;
-  }
-  .weui-cell__bd {
-    view {
-      font-size: 28rpx;
-    }
-  }
+
 </style>
 <template>
   <view class="mine-container">
-    <view class="mine-user">
-      <view class="mine-user-box" @tap="toLogin">
-        <image src="{{unionuser.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}"/>
-        <text>{{unionuser.userName || '未登录'}}</text>
-      </view>
-    </view>
-    <view class="weui-panel">
-      <view class="weui-panel__hd">功能列表</view>
-      <view class="weui-panel__bd">
-          <view class="weui-media-box weui-media-box_small-appmsg">
-              <view class="weui-cells weui-cells_in-small-appmsg">
-                  <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="toDetailPage('myMessage')">
-                      <view class="weui-cell__hd"><image src="../assets/icon/mine-message.png" style="display:block;width: 20px;height: 20px;margin-right: 5px" /></view>
-                      <view class="weui-cell__bd weui-cell_primary">
-                          <view>我的消息</view>
-                      </view>
-                      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                  </view>
-                  <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="toDetailPage('myOrder')">
-                      <view class="weui-cell__hd"><image src="../assets/icon/mine-order.png" style="display:block;width: 20px;height: 20px;margin-right: 5px" /></view>
-                      <view class="weui-cell__bd weui-cell_primary">
-                          <view>我的订单</view>
-                      </view>
-                      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                  </view>
-                  <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="toDetailPage('myCourses')">
-                      <view class="weui-cell__hd"><image src="../assets/icon/mine-course.png" style="display:block;width: 20px;height: 20px;margin-right: 5px" /></view>
-                      <view class="weui-cell__bd weui-cell_primary">
-                          <view>我的课程</view>
-                      </view>
-                      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                  </view>
-                  <view url="" class="weui-cell weui-cell_access" hover-class="weui-cell_active" @tap="toDetailPage('about')">
-                      <view class="weui-cell__hd"><image src="../assets/icon/mine-about.png" style="display:block;width: 20px;height: 20px;margin-right: 5px" /></view>
-                      <view class="weui-cell__bd weui-cell_primary">
-                          <view>关于</view>
-                      </view>
-                      <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-                  </view>
-              </view>
-          </view>
-      </view>
-    </view>
+   mine
   </view>
 </template>
 <script>
-  import wepy from 'wepy'
-  import config from '../config/config'
+import wepy from "wepy";
 
-  export default class Mine extends wepy.page {
-    config = {
-      navigationBarTitleText: '我的'
-    }
-    components = {
-    }
-    data = {
-      unionuser: null
-    }
-    methods = {
-      toDetailPage (params) {
-        this.$navigate(`/pages/mine/${params}`)
-      },
-      toLogin () {
-        this.$navigate(`/pages/login/login`)
-      }
-    }
-    onLoad () {
-    }
-    onShow () {
-      let self = this 
-      const unionuser = config.getUnionuser()
-      self.unionuser = unionuser
-    }
+export default class Mine extends wepy.page {
+  config = {
+    navigationBarTitleText: "我的"
+  };
+  components = {};
+  data = {};
+  methods = {};
+  onLoad() {
+    console.log("load");
   }
+}
 </script>

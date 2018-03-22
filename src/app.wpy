@@ -75,24 +75,7 @@ export default class extends wepy.app {
     pages: [
       'pages/index',
       'pages/lessons',
-      'pages/schedule',
-      'pages/mine',
-      'pages/school/school',
-      'pages/teacher/teacher',
-      'pages/teacher/teacherDetail',
-      'pages/lessonDetail/lessonDetail',
-      'pages/lessonDetail/appointment',
-      'pages/lessonDetail/order',
-      'pages/scheduleDetail/courseEvaluation',
-      'pages/scheduleDetail/scheduleDetail',
-      'pages/mine/myMessageDetail',
-      'pages/mine/myMessage',
-      'pages/mine/myCourses',
-      'pages/mine/myOrder',
-      'pages/mine/about',
-      'pages/login/login',
-      'pages/login/loginByTel',
-      'pages/login/changePwd',
+      'pages/mine'
     ],
     window: {
       backgroundTextStyle: 'light',
@@ -114,11 +97,6 @@ export default class extends wepy.app {
         iconPath: 'assets/icon/iconfont-lesson.png',
         selectedIconPath: 'assets/icon/iconfont-lesson-active.png',
         text: '课程'
-      }, {
-        pagePath: 'pages/schedule',
-        iconPath: 'assets/icon/iconfont-teacher.png',
-        selectedIconPath: 'assets/icon/iconfont-teacher-active.png',
-        text: '课表'
       }, {
         pagePath: 'pages/mine',
         iconPath: 'assets/icon/iconfont-mine.png',
@@ -147,17 +125,6 @@ export default class extends wepy.app {
         resolve('promise resolved')
       }, s * 1000)
     })
-  }
-  auth () {
-    let token = config.getToken()
-    if (!token) {
-      this.showAuthFailedModal()
-    } else {
-      // let unionuser = config.getUnionuser();
-      // if (unionuser.type == "student") {
-      // }
-      return true;
-    }
   }
   getUserInfo(cb) {
     const that = this

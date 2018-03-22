@@ -9,24 +9,24 @@
 </template>
 
 <script>
-  import wepy from 'wepy'
+import wepy from "wepy";
 
-  export default class Index extends wepy.page {
-    config = {
-      navigationBarTitleText: 'index',
-      navigationBarTextStyle: 'white',
-      navigationBarBackgroundColor: '#dd5044',
-      usingComponents: {
-        'wxc-dialog': '../packages/@minui/wxc-dialog/dist/index',
-        'wxc-icon': '../packages/@minui/wxc-icon/dist/index',
-        'wxc-loading': '../../packages/@minui/wxc-loading/dist/index'
-      }
+export default class Index extends wepy.page {
+  config = {
+    navigationBarTitleText: "index",
+    navigationBarTextStyle: "white",
+    navigationBarBackgroundColor: "#dd5044",
+    usingComponents: {
+      "wxc-dialog": "../packages/@minui/wxc-dialog/dist/index",
+      "wxc-icon": "../packages/@minui/wxc-icon/dist/index",
+      "wxc-loading": "../../packages/@minui/wxc-loading/dist/index"
     }
-    components = {}
-    data = {}
-    methods = {}
-    onLoad() {
-      console.log('onLoad')
+  };
+  components = {};
+  data = {};
+  methods = {};
+  onLoad() {
+    console.log("onLoad");
   }
-  
+}
 </script>
