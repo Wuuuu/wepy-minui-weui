@@ -1,4 +1,5 @@
 const config = require('../config/config')
+const util = require('../utils/util')
 
 function urlEncode(params, key, encode) {
   if (params == null) return ''
@@ -30,7 +31,7 @@ function request({ url, params, data, method, success, complete }) {
     header: {
       'content-type': 'application/json',
       '_p': config.platformNo,
-      '_t': config.getToken(),
+      '_t': util.getToken(),
       '_a': 'false'
     },
     success: (result) => {

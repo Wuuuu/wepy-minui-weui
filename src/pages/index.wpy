@@ -1,209 +1,19 @@
 <style lang="less">
 
-.index-subject-box {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 32rpx 20rpx 20rpx;
-  .subject-box {
-    flex: 0 0 25%; 
-    .subject-box-poster {
-      margin-bottom: 10rpx;
-      image {
-        display: block;
-        margin: 0 auto;
-        width: 120rpx;
-        height: 120rpx;
-      }
-    }
-    .subject-box-name {
-      text-align: center;
-      font-size: 28rpx;
-    }
-  }
-}
-.recommend-lesson-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 16rpx;
-  .lesson-box {
-    flex: 0 0 50%;
-    padding-bottom: 12rpx;
-    .lesson-poster {
-      image {
-        display: block;
-        margin: 0 auto;
-        width: 90%;
-        border-radius: 12rpx;
-      }
-    }
-    .lesson-name {
-      padding-left: 18rpx;
-      font-size: 28rpx;
-    }
-    .lesson-num {
-      padding-left: 18rpx;
-      font-size: 24rpx;
-      color: #666;
-    }
-  }
-}
-.scroll-view_H {
-  margin: 30rpx 0;
-  white-space: nowrap;
-  width: 100%;
-  .school-display {
-    position: relative;
-    display: inline-block;
-    margin: 16rpx 8rpx;
-    width: 340rpx;
-    image {
-      display: block;
-      margin: 0 auto;
-      width: 100%;
-      opacity: 0.9;
-      border-radius: 16rpx;
-      -webkit-filter: brightness(0.70); /* Chrome, Safari, Opera */
-      filter: brightness(0.70);
-    }
-    .shade {
-      position: absolute;
-      left: 0;
-      top: 40%;
-      width: 100%;
-      text-align: center;
-      color: #fff;
-    }
-  }
-}
-.teacher-wrapper {
-  margin-bottom: 50rpx;
-  background: #fff;
-  .teacher-box {
-    display: flex;
-    margin-left: 30rpx;
-    padding: 20rpx 0;
-    border-bottom: 1px solid #efefef;
-    .teacher-box-avatar {
-      flex: 0 0 160rpx;
-      image　{
-        display: block;
-        margin: 0 auto;
-        width: 140rpx;
-        height: 140rpx;
-        border-radius: 50%;
-        border: 1px solid #efefef;
-      }
-    }
-    .teacher-box-msg {
-      flex: 1;
-      padding-left: 12rpx;
-      .name {
-        font-size: 36rpx;
-      }
-      .subject {
-        font-size: 28rpx;
-      }
-      .intro {
-        display: block;
-        width: 500rpx;
-        font-size: 24rpx;
-        color: #666;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        white-space: nowrap;
-      }
-    }
-  }
-}
 </style>
 
 <template>
-  <veiw class="index-container">
-    <Swiper />
-    <!-- 科目区域 -->
-    <view class="index-subject">
-      <view class="index-subject-box">
-        <repeat for="{{list.subjects}}" key="index" index="index" item="item">
-          <view class="subject-box" @tap="handleToSubject({{index}})" >
-            <view class="subject-box-poster">
-              <image src="{{item.poster}}" />
-            </view>
-            <view class="subject-box-name">{{item.name}}</view>
-          </view>
-        </repeat>
-        <!-- <view class="subject-box" @tap="handleViewMore">
-          <view class="subject-box-poster">
-            <image src="../assets/index/index1_01.png" />
-          </view>
-          <view class="subject-box-name">查看更多</view>
-        </view> -->
-      </view>
-    </view>
-    <RecommendNav :msg="recommendation" :isShow="recommendbol"/>
-    <!-- 精品推荐 -->
-    <view class="recommend-lesson">
-        <view class="recommend-lesson-wrapper">
-          <repeat for="{{list.recommendCourse}}" key="index" index="index" item="item">  
-            <view class="lesson-box" @tap="toListsDetails" data-id="{{item.id}}" data-page="lessonDetail">
-              <view class="lesson-poster">
-                <image src="http://th-test.oss-cn-shanghai.aliyuncs.com/upload/teach/image/20180118/120644113_50254.png?Expires=4671922005&OSSAccessKeyId=LTAIrAATEK6r8Lq3&Signature=ZgUoWZkwbiF4Xb4wgDG3hY1QyX4%3D" mode="widthFix" />
-              </view>
-              <view class="lesson-name">{{item.name}}</view>
-              <view class="lesson-num">{{item.enrollStudents || 10}}人报名</view>
-            </view>
-          </repeat>
-        </view>
-    </view>
-    <RecommendNavSchool :msg="campusEnvironment" :isShow="recommendbol"/>
-    <!-- 校区环境 -->
-    <view>
-      <scroll-view class="scroll-view_H" scroll-x style="width: 100%" scroll-with-animation="true">
-        <repeat for="{{list.schools}}" key="key" index="index" item="school">
-        <view class="school-display" data-id="{{school.id}}" @tap="toListsDetails" data-page="school">
-          <image src="../assets/school/school_01.png" mode="widthFix"/>
-          <view class="shade">{{school.name}}</view>
-        </view>
-        </repeat>
-      </scroll-view>
-    </view>
-    <RecommendNavTeacher :msg="teacherrecommend" />
-    <!-- 老师推荐 -->
-    <view class="teacher-wrapper">
-      <!-- <repeat for="{{list.recommendTeacher}}" item="teacher"> -->
-        <!-- <view class="teacher-box" @tap="toListsDetails" data-id="{{teacher.id}}" data-action="{{teacher.personNo}}">
-          <view class="teacher-box-avatar">
-            <image src="{{teacher.photo || 'http://th-test.oss-cn-shanghai.aliyuncs.com/user.jpg'}}" />
-          </view>
-          <view class="teacher-box-msg">
-            <view class="name">{{teacher.name}}</view>
-            <view class="subject">油画、舞蹈 | 教学经验： 7年</view>
-            <view class="intro">从小就开始画画了，以优异的成绩考上路鲁迅学院，至今已经有20多年绘画经验了</view>
-          </view>
-        </view> -->
-        <TeacherList :teacherData.sync="teacherList" />
-      <!-- </repeat> -->
-    </view>
-    <wxc-loading class="wxc-loading" 
-      is-show="{{loadingStatus}}"
-      image="https://s10.mogucdn.com/mlcdn/c45406/170607_5241335cb37ka3ab7781ddh504ggh_200x200.png" 
-      slip="http://s10.mogucdn.com/p1/160715/upload_ifrgmmzwmyydknldhezdambqmeyde_200x200.png">
-    </wxc-loading>
-    </block>
-  </veiw>
+  <view class="index-container">
+    index
+  </view>
 </template>
 
 <script>
   import wepy from 'wepy'
-  import Swiper from '../components/swiper'
-  import RecommendNav from '../components/recommendNav'
-  import TeacherList from '../components/teacherList'
-
-  import util from '../utils/util.js'
-  import * as services_index from '../services/index/index'
 
   export default class Index extends wepy.page {
     config = {
-      navigationBarTitleText: '教立方首页',
+      navigationBarTitleText: 'index',
       navigationBarTextStyle: 'white',
       navigationBarBackgroundColor: '#dd5044',
       usingComponents: {
@@ -212,58 +22,11 @@
         'wxc-loading': '../../packages/@minui/wxc-loading/dist/index'
       }
     }
-    components = {
-      Swiper,
-      TeacherList,
-      RecommendNav,
-      RecommendNavSchool: RecommendNav,
-      RecommendNavTeacher: RecommendNav
-    }
-    data = {
-      recommendation: {title: '精品推荐', page: 'recommend'},
-      campusEnvironment: {title: '校区环境', page: 'school'},
-      teacherrecommend: {title: '老师推荐', page: 'teacher'},
-      list: [],
-      teacherList: [],
-      loadingStatus: true,
-      recommendbol: true
-    }
-    methods = {
-      handleViewMore () {
-        console.log('123')
-      },
-      handleToSubject (index) {
-        this.$preload('activeIndex', index)
-        this.$switch(`./lessons`)
-      },
-      toListsDetails(e) {
-        const { page } = e.currentTarget.dataset
-        const id = e.currentTarget.dataset.id
-        this.$navigate(`./${page}/${page}`, {id})
-      }
-      // toCourseDetails(e) {
-      //   const { id, page } = e.currentTarget.dataset
-      //   this.$navigate(`./${page}/${page}`, id)
-      // }
-    }
+    components = {}
+    data = {}
+    methods = {}
     onLoad() {
-      let self = this
-      const getUnionuser =util.getUnionuser()
-      console.log(getUnionuser)
-      services_index.query({
-        success: (res) => {
-          const list = res.data
-          console.log(list)
-          self.teacherList = list.recommendTeacher
-          self.list = list
-          self.$apply()
-        },
-        complete: () => {
-          self.loadingStatus = false
-          self.$apply()
-        }
-      })
-    }
+      console.log('onLoad')
   }
   
 </script>
