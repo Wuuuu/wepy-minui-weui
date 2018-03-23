@@ -1,4 +1,4 @@
 
   <view class="index-container">
-    index
+    <wxc-loading is-show="true" image="https://s10.mogucdn.com/mlcdn/c45406/170607_5241335cb37ka3ab7781ddh504ggh_200x200.png" slip="http://s10.mogucdn.com/p1/160715/upload_ifrgmmzwmyydknldhezdambqmeyde_200x200.png"/>
   </view>
