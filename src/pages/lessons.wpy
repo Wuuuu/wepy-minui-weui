@@ -11,7 +11,7 @@ import wepy from "wepy";
 
 export default class Lessons extends wepy.page {
   config = {
-    navigationBarTitleText: "2",
+    navigationBarTitleText: "第二页",
     navigationBarTextStyle: "white",
     navigationBarBackgroundColor: "#dd5044",
     enablePullDownRefresh: true,
