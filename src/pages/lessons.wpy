@@ -3,7 +3,7 @@
 </style>
 <template>
   <view>
-    22222
+    <wxc-countdown countdown="{{countdown}}"></wxc-countdown>
   </view>
 </template>
 <script>
@@ -16,10 +16,13 @@ export default class Lessons extends wepy.page {
     navigationBarBackgroundColor: "#dd5044",
     enablePullDownRefresh: true,
     usingComponents: {
+      "wxc-countdown": "../../packages/@minui/wxc-countdown/dist/index"
     }
   };
   components = {};
-  data = {};
+  data = {
+    countdown: 9999
+  };
   methods = {};
 
   onLoad() {

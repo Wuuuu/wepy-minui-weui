@@ -1,4 +1,4 @@
 
   <view class="_3c7b90a">
-    22222
+    <wxc-countdown countdown="{{countdown}}" class="_3c7b90a"/>
   </view>
