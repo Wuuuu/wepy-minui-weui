@@ -21,7 +21,7 @@ export default class Lessons extends wepy.page {
   };
   components = {};
   data = {
-    countdown: 9999
+    countdown: 10000
   };
   methods = {};
 
