@@ -22,7 +22,7 @@
       <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
     </view>
     <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">获取用户信息</button>
-    <button @tap="addNum('123',{name: 'wuuu'})">改变num的值</button>
+    <button @tap="addNum('123',{name: 'wuuu'})">改变num的值123</button>
     <panel>
       <view class="title" slot="title">测试数据绑定</view>
       <button class="weui-btn" type="primary">页面主操作 Normal</button>
