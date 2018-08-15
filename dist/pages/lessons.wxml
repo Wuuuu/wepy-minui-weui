@@ -1,4 +1,0 @@
-
-  <view class="_3c7b90a">
-    <wxc-countdown countdown="{{countdown}}" class="_3c7b90a"/>
-  </view>

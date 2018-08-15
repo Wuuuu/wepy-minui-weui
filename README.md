@@ -1,5 +1,5 @@
-# wepy + minui + weui
-wepy + minui +weui
+# wepy + minui + weui + wepy-redux
+wepy + minui + weui + wepy-redux
 
 ## min-cli 1.0.5-beta1, wepy 1.6.0
 

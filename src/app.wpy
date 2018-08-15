@@ -1,121 +1,50 @@
 <style lang="less">
 @import "./styles/weui/weui.wxss";
-
-  .flex {
-    display: flex;
-  }
-  .flex_full {
-    flex: 1;
-  }
-  .flex_column {
-    flex-direction: column;
-  }
-
-  .align_center {
-    align-items: center;
-  }
-
-  .align_start {
-    align-items: flex-start;
-  }
-
-  .align_end {
-    align-items: flex-end;
-  }
-
-  .justify_between {
-    justify-content: space-between;
-  }
-
-  .justify_center {
-    justify-content: center;
-  }
-
-  .margin_top {
-    margin-top: 15px;
-  }
-
-  .margin_left {
-    margin-left: 15px;
-  }
-
-  .margin_right {
-    margin-right: 15px;
-  }
-
-  .font_normal {
-    font-size: 15px;
-  }
-
-  .bg_white {
-    background-color: white;
-  }
-
-  .color_green {
-    color: #28b1b0
-  }
-
-  .color_gray {
-    color: #888888;
-  }
-
-  Page {
-    background-color: #F8F8F8
-  }
-
+.container {
+  height: 100%;
+  widows: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
 </style>
 
 <script>
 import wepy from 'wepy'
 import 'wepy-async-function'
-import config from './config/config'
+
+import { setStore } from 'wepy-redux'
+import configStore from './store'
+
+const store = configStore()
+setStore(store)
 
 export default class extends wepy.app {
   config = {
     pages: [
-      'pages/index',
-      'pages/lessons',
-      'pages/mine'
+      'pages/index'
     ],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',
       navigationBarTitleText: 'WeChat',
       navigationBarTextStyle: 'black'
-    },
-    tabBar: {
-      color: '#999999',
-      selectedColor: '#dd5044',
-      backgroundColor: '#fff',
-      list: [{
-        pagePath: 'pages/index',
-        iconPath: 'assets/icon/iconfont-home.png',
-        selectedIconPath: 'assets/icon/iconfont-home-active.png',
-        text: '首页'
-      }, {
-        pagePath: 'pages/lessons',
-        iconPath: 'assets/icon/iconfont-lesson.png',
-        selectedIconPath: 'assets/icon/iconfont-lesson-active.png',
-        text: '第二页'
-      }, {
-        pagePath: 'pages/mine',
-        iconPath: 'assets/icon/iconfont-mine.png',
-        selectedIconPath: 'assets/icon/iconfont-mine-active.png',
-        text: '第三页'
-      }]
     }
   }
-  // this.$parent.globalData 获取全局变量
+
   globalData = {
     userInfo: null
   }
+
   constructor () {
     super()
     this.use('requestfix')
   }
 
   onLaunch() {
-    console.log('程序启动')
+    this.testAsync()
   }
 
   sleep (s) {
@@ -125,6 +54,12 @@ export default class extends wepy.app {
       }, s * 1000)
     })
   }
+
+  async testAsync () {
+    const data = await this.sleep(3)
+    console.log('---------', data)
+  }
+
   getUserInfo(cb) {
     const that = this
     if (this.globalData.userInfo) {
@@ -134,7 +69,6 @@ export default class extends wepy.app {
       success (res) {
         that.globalData.userInfo = res.userInfo
         cb && cb(res.userInfo)
-        alert(res)
       }
     })
   }

@@ -1,16 +1,20 @@
 {
 	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
 	"setting": {
-		"urlCheck": true,
+		"urlCheck": false,
 		"es6": false,
 		"postcss": false,
 		"minified": false,
 		"newFeature": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "1.9.91",
-	"appid": "touristappid",
-	"projectname": "123123",
+	"libVersion": "2.2.2",
+	"appid": "wx18055642f33ae191",
+	"projectname": "wewe",
+	"isGameTourist": false,
 	"condition": {
 		"search": {
 			"current": -1,
