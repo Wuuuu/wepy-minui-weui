@@ -32,14 +32,28 @@ wepy build -w
 
 2、新建配置文件：min.config.json
 配置内容：
+新加入了style,可供全局颜色样式使用
 ```
 {
-"compilers": {
+  "style": {
+    "brandColor": "#FF0077",
+    "controlColor": "#FF5777",
+    "mainHeadingColor": "#333333",
+    "subHeadingColor": "#666666",
+    "darkPromptColor": "#999999",
+    "splitLineColor": "#ECECEC",
+    "backgroundColour": "#EFEFEF"
+  },
+  "prefix": "wxc",
+  "dest": "dist",
+  "npm": {
+    "dest": "dist/packages",
+    "scope": ""
+  },
+  "compilers": {
     "babel": {
       "sourceMaps": "inline",
-      "presets": [
-        "env"
-      ],
+      "presets": ["env"],
       "plugins": [
         "syntax-export-extensions",
         "transform-class-properties",
@@ -49,6 +63,7 @@ wepy build -w
     }
   }
 }
+
 ```
 
 3、再通过 min install @minui/wxc-xxx 命令 安装需要的组件
