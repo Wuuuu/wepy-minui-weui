@@ -10,7 +10,7 @@ wepy + minui + weui + wepy-redux
 2、执行
 
 ```
-npm i 
+npm i / cnpm i / yarn i
 
 wepy build -w
 ```
