@@ -77,5 +77,4 @@ $ min install @minui/wxc-loading
 <img src="https://ws3.sinaimg.cn/large/006tKfTcgy1fm6xmveiqmj30k00zo76h.jpg" width="30%" height="30%"> -->
 
 ## Wepy小程序组件预览
-<img src="https://mp.weixin.qq.com/wxopen/qrcode?action=show&type=2&fakeid=3507273656&token=1182659679" width="30%" height="30%">
-
+![Image text](https://mp.weixin.qq.com/wxopen/qrcode?action=show&type=2&fakeid=3507273656&token=1182659679)
